@@ -11,11 +11,11 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+      <!-- Nav Item - Home -->
+      <li class="nav-item <?= $active != 'home' ? '' : 'active' ?>">
+        <a class="nav-link" href="{{ route('home') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Home</span></a>
       </li>
 
       <!-- Divider -->
@@ -93,11 +93,11 @@
           <span>Charts</span></a>
       </li>
 
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+      <!-- Nav Item - Customer -->
+      <li class="nav-item <?= $active != 'customer' ? '' : 'active' ?>">
+        <a class="nav-link" href="{{ route('customer-url') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
+          <span>Customer</span></a>
       </li>
 
       <!-- Divider -->
