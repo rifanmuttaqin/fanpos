@@ -11,6 +11,9 @@
 |
 */
 
+// Landing Page Home
+Route::get('/', ['as'=>'home', 'uses' => 'HomeController@index']);
+
 // Group Auth controller
 $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($router) {
     $router->get('/login',  ['uses' => 'LoginController@showLoginForm']);
@@ -28,9 +31,20 @@ $router->group(['prefix' => 'home'], function () use ($router) {
 $router->group(['prefix' => 'customer'], function () use ($router) {
 	$router->get('/',  ['as'=>'customer-url','uses' => 'CustomerController@index']);
     $router->get('/create',  ['as'=>'create-customer','uses' => 'CustomerController@create']);
-    $router->post('/store',  ['as'=>'store-customer', 'uses' => 'CustomerController@login']);
-    $router->get('/delete',  ['as'=>'delete-customer','uses' => 'CustomerController@logout']);
+    $router->post('/store',  ['as'=>'store-customer', 'uses' => 'CustomerController@store']);
+    $router->post('/delete',  ['as'=>'delete-customer','uses' => 'CustomerController@delete']);
     $router->post('/get-detail', ['as'=>'detail-customer', 'uses' => 'CustomerController@show']);
     $router->get('/update/{id}',  ['as'=>'view-update','uses' => 'CustomerController@viewupdate']);
     $router->post('/update',  ['as'=>'doupdate','uses' => 'CustomerController@doupdate']);
+});
+
+// Route Supplier 
+$router->group(['prefix' => 'supplier'], function () use ($router) {
+    $router->get('/',  ['as'=>'supplier-url','uses' => 'SupplierController@index']);
+    $router->get('/create',  ['as'=>'create-supplier','uses' => 'SupplierController@create']);
+    $router->post('/store',  ['as'=>'store-supplier', 'uses' => 'SupplierController@store']);
+    $router->post('/delete',  ['as'=>'delete-supplier','uses' => 'SupplierController@delete']);
+    $router->post('/get-detail', ['as'=>'detail-supplier', 'uses' => 'SupplierController@show']);
+    $router->get('/update/{id}',  ['as'=>'view-update','uses' => 'SupplierController@viewupdate']);
+    $router->post('/update',  ['as'=>'doupdate','uses' => 'SupplierController@doupdate']);
 });

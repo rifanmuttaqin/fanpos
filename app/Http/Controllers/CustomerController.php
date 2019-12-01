@@ -8,8 +8,11 @@ use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Http\Resources\Customer\CustomerResource;
 
 use DB;
+use Image;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 use Yajra\Datatables\Datatables;
 
@@ -91,6 +94,22 @@ class CustomerController extends Controller
         $customer->nomor_telfon = $request->get('nomor_telfon');
         $customer->email = $request->get('email');
 
+        if ($request->hasFile('file')) {
+            
+            $image      = $request->file('file');
+            $fileName   = time() . '.' . $image->getClientOriginalExtension();
+
+            $img = Image::make($image->getRealPath());
+            $img->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();                 
+            });
+
+            $img->stream();
+            Storage::disk('local')->put('public/customer_profile/'.$fileName, $img, 'public');
+
+            $customer->url_profile_pic = $fileName;
+        }
+
         if(!$customer->save())
         {
             DB::rollBack();
@@ -146,6 +165,26 @@ class CustomerController extends Controller
         $customer->alamat = $request->get('alamat');
         $customer->nomor_telfon = $request->get('nomor_telfon');
         $customer->email = $request->get('email');
+
+        if ($request->hasFile('file')) {
+            
+            $image      = $request->file('file');
+            $fileName   = time() . '.' . $image->getClientOriginalExtension();
+
+            $img = Image::make($image->getRealPath());
+            $img->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();                 
+            });
+
+            $img->stream();
+            Storage::disk('local')->put('public/customer_profile/'.$fileName, $img, 'public');
+
+            $customer->url_profile_pic = $fileName;
+        }
+        else
+        {
+            $customer->url_profile_pic = null;
+        }
 
         if(!$customer->save())
         {

@@ -22,25 +22,17 @@
   <!-- Core plugin JavaScript-->
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="<?= URL::to('/'); ?>/layout/assets/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <!-- <script src="<?= URL::to('/'); ?>/layout/assets/vendor/chart.js/Chart.min.js"></script> -->
-
-  <!-- Page level custom scripts -->
-  <!-- <script src="<?= URL::to('/'); ?>/layout/assets/js/demo/chart-area-demo.js"></script>
-  <script src="<?= URL::to('/'); ?>/layout/assets/js/demo/chart-pie-demo.js"></script> -->
-
   <!-- Custom styles for this template-->
   <link href="<?= URL::to('/'); ?>/layout/assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="<?= URL::to('/'); ?>/layout/assets/css/additional.css" rel="stylesheet">
 
   <!-- Sweat Alert -->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- DataTable -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer>
+  </script>
 
   @stack('scripts')
 
@@ -136,3 +128,13 @@
 <script type="text/javascript">
     var base_url = {!! json_encode(url('/')) !!}
 </script>
+
+<!-- Custom scripts for all pages-->
+<script src="<?= URL::to('/'); ?>/layout/assets/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<!-- <script src="<?= URL::to('/'); ?>/layout/assets/vendor/chart.js/Chart.min.js"></script> -->
+
+<!-- Page level custom scripts -->
+<!-- <script src="<?= URL::to('/'); ?>/layout/assets/js/demo/chart-area-demo.js"></script>
+<script src="<?= URL::to('/'); ?>/layout/assets/js/demo/chart-pie-demo.js"></script> -->

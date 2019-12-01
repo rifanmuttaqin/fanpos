@@ -9,12 +9,12 @@
 			<div class="card col-sm-8">
 				<div class="card-body col-sm-12">
 
-					<form  method="post" action="{{ route('store-customer') }}" enctype="multipart/form-data">
+					<form  method="post" action="{{ route('store-supplier') }}" enctype="multipart/form-data">
 
 					@csrf
 
 					<div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name ="nama" id="nama" placeholder="Nama Customer">
+	                  <input type="text" class="form-control form-control-user" name ="nama" id="nama" placeholder="Nama Supplier">
 					@if ($errors->has('nama'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama') }}</p></div>
 					@endif
