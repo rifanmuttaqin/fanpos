@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Supplier;
+namespace App\Http\Resources\Kategori;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SupplierResource extends JsonResource
+class KategoriResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,8 @@ class SupplierResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nama' => $this->nama,
-            'alamat' => $this->alamat,
-            'nomor_telfon' => $this->nomor_telfon,
-            'email' => $this->email,  
+            'nama_kategori' => $this->nama_kategori,
+            'keterangan' => $this->keterangan,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

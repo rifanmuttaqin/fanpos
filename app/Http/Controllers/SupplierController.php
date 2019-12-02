@@ -42,7 +42,7 @@ class SupplierController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){  
                         $btn = '
-                        <button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-success btn-circle btn-sm"><i class="icon-pencil"></i></button>';
+                        <button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-success btn-circle btn-sm"><i class="far fa-edit"></i></button>';
                         $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></button>';
                         return $btn .'&nbsp'.'&nbsp'. $delete; 
                     })

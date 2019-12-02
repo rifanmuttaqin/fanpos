@@ -21,13 +21,13 @@ class UpdateSupplierRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
             'nama'              => 'required|string',
             'alamat'            => 'required|string',
-            'nomor_telfon'      => 'string',
-            'email'             => 'string',
+            'nomor_telfon'      => 'nullable | string',
+            'email'             => 'nullable | string',
         ];
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Customer;
+namespace App\Http\Requests\Satuan;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCustomerRequest extends FormRequest
+class UpdateSatuanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class StoreCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'              => 'required|string',
-            'alamat'            => 'required|string',
-            'nomor_telfon'      => 'nullable | string',
-            'email'             => 'nullable | string',
-            'url_profile_pic'   => 'nullable | string'
+            'nama_satuan'              => 'required|string',
+            'simbol_satuan'            => 'required|string',
         ];
     }
 

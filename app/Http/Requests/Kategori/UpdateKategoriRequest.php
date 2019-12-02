@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Customer;
+namespace App\Http\Requests\Kategori;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCustomerRequest extends FormRequest
+class UpdateKategoriRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class StoreCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'              => 'required|string',
-            'alamat'            => 'required|string',
-            'nomor_telfon'      => 'nullable | string',
-            'email'             => 'nullable | string',
-            'url_profile_pic'   => 'nullable | string'
+            'nama_kategori'         => 'required|string',
+            'keterangan'            => 'nullable | string'
         ];
     }
 

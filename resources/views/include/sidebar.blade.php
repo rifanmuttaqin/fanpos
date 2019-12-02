@@ -3,7 +3,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+          <i class="fas fa-cart-plus"></i>
         </div>
         <div class="sidebar-brand-text mx-3">FANPOS</div>
       </a>
@@ -37,6 +37,8 @@
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
             <a class="collapse-item" href="{{ route('customer-url') }}">Customer</a>
             <a class="collapse-item" href="{{ route('supplier-url') }}">Supplier</a>
+            <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
+            <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
           </div>

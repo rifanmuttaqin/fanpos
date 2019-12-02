@@ -28,8 +28,9 @@ class UpdateCustomerRequest extends FormRequest
         return [
             'nama'              => 'required|string',
             'alamat'            => 'required|string',
-            'nomor_telfon'      => 'string',
-            'email'             => 'string',
+            'nomor_telfon'      => 'nullable | string',
+            'email'             => 'nullable | string',
+            'url_profile_pic'   => 'nullable | string'
         ];
     }
 

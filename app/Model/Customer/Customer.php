@@ -25,7 +25,8 @@ class Customer extends Model
     public static $rules = [
         'nama' => 'required | string',
         'alamat' => 'required | string',
-        'email' => 'required | string'
+        'email' => 'required | string',
+        'url_profile_pic' => 'nullable | string'
     ];
 
     /**

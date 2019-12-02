@@ -48,3 +48,21 @@ $router->group(['prefix' => 'supplier'], function () use ($router) {
     $router->get('/update/{id}',  ['as'=>'view-update','uses' => 'SupplierController@viewupdate']);
     $router->post('/update',  ['as'=>'doupdate','uses' => 'SupplierController@doupdate']);
 });
+
+// Untuk Kategori
+$router->group(['prefix' => 'kategori'], function () use ($router) {
+    $router->get('/',  ['as'=>'kategori-url','uses' => 'KategoriController@index']);
+    $router->post('/store',  ['as'=>'store-kategori','uses' => 'KategoriController@store']);
+    $router->post('/show',  ['as'=>'show-kategori','uses' => 'KategoriController@show']);
+    $router->post('/update',  ['as'=>'update-kategori','uses' => 'KategoriController@update']);
+    $router->post('/delete',  ['as'=>'delete-kategori','uses' => 'KategoriController@destroy']);
+});
+
+// Untuk Satuan
+$router->group(['prefix' => 'satuan'], function () use ($router) {
+    $router->get('/',  ['as'=>'satuan-url','uses' => 'SatuanController@index']);
+    $router->post('/store',  ['as'=>'store-satuan','uses' => 'SatuanController@store']);
+    $router->post('/show',  ['as'=>'show-satuan','uses' => 'SatuanController@show']);
+    $router->post('/update',  ['as'=>'update-satuan','uses' => 'SatuanController@update']);
+    $router->post('/delete',  ['as'=>'delete-satuan','uses' => 'SatuanController@destroy']);
+});
