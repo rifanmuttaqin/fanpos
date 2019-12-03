@@ -77,7 +77,7 @@
       <label>Simbol Satuan</label>
       <input type="text" class="form-control" value="" name="simbol_satuan" id="simbol_satuan">
     </div>
-
+    
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger pull-right" id="hapus_action">Hapus</button>

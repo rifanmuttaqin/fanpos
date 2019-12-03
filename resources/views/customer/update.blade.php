@@ -94,7 +94,7 @@
 								
 				<div id="trash" style="<?= $customer->url_profile_pic != null ? '' : 'display: none' ?>;">
 					<button type="button" class="btn btn-info" id="delete_image">
-						<span class="glyphicon glyphicon-trash"></span>
+						<i class="fas fa-trash"></i>
 					</button>
 				</div>
 
