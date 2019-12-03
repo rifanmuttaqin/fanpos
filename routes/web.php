@@ -34,8 +34,8 @@ $router->group(['prefix' => 'customer'], function () use ($router) {
     $router->post('/store',  ['as'=>'store-customer', 'uses' => 'CustomerController@store']);
     $router->post('/delete',  ['as'=>'delete-customer','uses' => 'CustomerController@delete']);
     $router->post('/get-detail', ['as'=>'detail-customer', 'uses' => 'CustomerController@show']);
-    $router->get('/update/{id}',  ['as'=>'view-update','uses' => 'CustomerController@viewupdate']);
-    $router->post('/update',  ['as'=>'doupdate','uses' => 'CustomerController@doupdate']);
+    $router->get('/update/{id}',  ['as'=>'view-update-customer','uses' => 'CustomerController@viewupdate']);
+    $router->post('/update',  ['as'=>'doupdatecustomer','uses' => 'CustomerController@doupdate']);
 });
 
 // Route Supplier 
@@ -66,3 +66,6 @@ $router->group(['prefix' => 'satuan'], function () use ($router) {
     $router->post('/update',  ['as'=>'update-satuan','uses' => 'SatuanController@update']);
     $router->post('/delete',  ['as'=>'delete-satuan','uses' => 'SatuanController@destroy']);
 });
+
+// Untuk Toko
+Route::get('/toko', ['as'=>'toko', 'uses' => 'TokoController@index']);

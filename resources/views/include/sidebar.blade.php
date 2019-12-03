@@ -37,8 +37,6 @@
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
             <a class="collapse-item" href="{{ route('customer-url') }}">Customer</a>
             <a class="collapse-item" href="{{ route('supplier-url') }}">Supplier</a>
-            <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
-            <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
           </div>
@@ -74,21 +72,6 @@
         Pengaturan
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
-          </div>
-        </div>
-      </li>
-
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -97,10 +80,11 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Pengaturan</h6>
-            <a class="collapse-item" href="utilities-color.html">Global</a>
-            <a class="collapse-item" href="utilities-border.html">Log Sistem</a>
-            <a class="collapse-item" href="utilities-animation.html">Pengguna</a>
+            <h6 class="collapse-header">Data Pendukung</h6>
+            <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
+            <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
+            <h6 class="collapse-header">Data Aplikasi</h6>
+            <a class="collapse-item" href="{{ route('toko') }}">Data Toko</a>
           </div>
         </div>
       </li>

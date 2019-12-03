@@ -39,7 +39,7 @@
 			<div class="card col-sm-8">
 				<div class="card-body col-sm-12">
 
-					<form  method="post" action="{{ route('doupdate') }}" enctype="multipart/form-data">
+					<form  method="post" action="{{ route('doupdatecustomer') }}" enctype="multipart/form-data">
 
 					@csrf
 
@@ -85,14 +85,14 @@
 
 			<div class="card col-sm-4">
 				<div style="text-align: center; padding-top: 20px">
-					<img src="<?= $customer->url_profile_pic != null ? URL::to('/').'/storage/customer_profile/'.$customer->url_profile_pic : ''; ?>" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
+					<img src="<?= $customer->url_profile_pic != null ? URL::to('/').'/storage/customer_profile/'.$customer->url_profile_pic : URL::to('/layout/assets/img/avatar.png'); ?>" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
 				</div>
 
 				<div style="text-align: center; padding-top: 10px">
 
 				<!-- Delete Button -->
 								
-				<div id="trash" style="<?= $customer->url_profile_pic != null ? '' : 'display: none' ?>;">
+				<div id="trash" style="<?= $customer->url_profile_pic != null ? URL::to('/layout/assets/img/avatar.png') : 'display: none' ?>;">
 					<button type="button" class="btn btn-info" id="delete_image">
 						<i class="fas fa-trash"></i>
 					</button>
@@ -146,14 +146,14 @@ $( document ).ready(function() {
 
 function showUploadImage()
 {
-    $('#profile_pic').attr('src', '');
+    $('#profile_pic').attr('src', '{{URL::to('/layout/assets/img/avatar.png')}}');
     $('#upload').show();
     $('#trash').hide();
 }
 
 function showTrashImage()
 {
-	$('#profile_pic').attr('src', '');
+	$('#profile_pic').attr('src', '{{URL::to('/layout/assets/img/avatar.png')}}');
 	$('#upload').hide();
     $('#trash').show();
 }

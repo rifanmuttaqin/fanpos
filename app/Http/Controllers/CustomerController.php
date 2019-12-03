@@ -190,7 +190,7 @@ class CustomerController extends Controller
         {
             // $this->systemLog(true,'Gagal Mengupdate Customer');
             DB::rollBack();
-            return  redirect()->route('view-update', ['id' => $request->get('customerid')])->with('alert_error', 'Gagal Diperbaharui');
+            return  redirect()->route('view-update-customer', ['id' => $request->get('customerid')])->with('alert_error', 'Gagal Diperbaharui');
             // return $this->getResponse(false,400,'','Customer gagal diupdate');
         }
 
@@ -198,7 +198,7 @@ class CustomerController extends Controller
         // {
             // $this->systemLog(false,'Berhasil Mengupdate Customer');
             DB::commit();
-            return  redirect()->route('view-update', ['id' => $request->get('customerid')])->with('alert_success', 'Berhasil Diperbaharui');
+            return  redirect()->route('view-update-customer', ['id' => $request->get('customerid')])->with('alert_success', 'Berhasil Diperbaharui');
         // }
         // else
         // {

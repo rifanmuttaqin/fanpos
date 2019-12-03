@@ -52,12 +52,13 @@
 
 			<div class="card col-sm-4">
 				<div style="text-align: center; padding-top: 20px">
-					<img src="" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
+					<img src="{{URL::to('/layout/assets/img/avatar.png')}}" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
 				</div>
 
 				<div style="text-align: center; padding-top: 10px">
 				
 				<input type="file" name="file" id="file" class="inputfile" accept="image/x-png,image/gif,image/jpeg"/>
+				
 				<label for="file"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Pilih Gambar</label>
 
 				<p> Gambar Max. 2 MB </p>
