@@ -32,6 +32,7 @@ class TokoController extends Controller
      */
     public function index()
     {
-        return view('toko.index', ['active'=>'toko']);
+        $toko = Toko::firstOrFail();
+        return view('toko.index', ['active'=>'toko', 'toko'=>$toko]);
     }
 }

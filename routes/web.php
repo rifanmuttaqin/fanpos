@@ -68,4 +68,7 @@ $router->group(['prefix' => 'satuan'], function () use ($router) {
 });
 
 // Untuk Toko
-Route::get('/toko', ['as'=>'toko', 'uses' => 'TokoController@index']);
+$router->group(['prefix' => 'toko'], function () use ($router) {
+    $router->get('/',  ['as'=>'toko','uses' => 'TokoController@index']);
+    $router->post('/update',  ['as'=>'update-toko','uses' => 'TokoController@update']);
+});

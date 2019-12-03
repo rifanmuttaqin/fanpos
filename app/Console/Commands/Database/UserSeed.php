@@ -47,6 +47,6 @@ class UserSeed extends Command
             '--class' => 'UsersSeeder'
         ]);
 
-        info('Fresh Migration Successful.');
+        info('Berhasil Disuntikkan.');
     }
 }

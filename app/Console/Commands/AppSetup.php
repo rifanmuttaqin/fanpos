@@ -54,6 +54,9 @@ class AppSetup extends Command
         $this->line('Menyuntikan User Ke Database.');
         Artisan::call('database:user:seed');
 
+        $this->line('Menyuntikan Data Toko Sementara.');
+        Artisan::call('database:toko:seed');
+
         $this->line('Instalasi telah selesai, Selamat Menggunakan FANPOS.');
     }
 }

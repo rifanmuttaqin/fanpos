@@ -39,61 +39,61 @@
 			<div class="card col-sm-8">
 				<div class="card-body col-sm-12">
 
-					<form  method="post" action="{{ route('doupdate') }}" enctype="multipart/form-data">
+					<form  method="post" action="{{ route('update-toko') }}" enctype="multipart/form-data">
 
 					@csrf
 
 					<div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name ="nama_toko" id="nama_toko" placeholder="Nama Toko" value="">
+	                  <input type="text" class="form-control form-control-user" name ="nama_toko" id="nama_toko" placeholder="Nama Toko" value="{{ $toko->nama_toko }}">
 					@if ($errors->has('nama_toko'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama_toko') }}</p></div>
 					@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="npwp" id="npwp" placeholder="NPWP" value="">
+	                  <input type="text" class="form-control form-control-user" name="npwp" id="npwp" placeholder="NPWP" value="{{ $toko->npwp }}">
 						@if ($errors->has('npwp'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('npwp') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko" value="">
+	                  <input type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko" value="{{ $toko->alamat_toko }}">
 						@if ($errors->has('alamat_toko'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('alamat_toko') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="nomor_telfon" id="nomor_telfon" placeholder="Nomor Telfon" value="">
+	                  <input type="text" class="form-control form-control-user" name="nomor_telfon" id="nomor_telfon" placeholder="Nomor Telfon" value="{{ $toko->nomor_telfon }}">
 						@if ($errors->has('nomor_telfon'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('nomor_telfon') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" value="">
+	                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email" value="{{ $toko->email }}">
 						@if ($errors->has('email'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('email') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="fax" id="fax" placeholder="Fax" value="">
+	                  <input type="text" class="form-control form-control-user" name="fax" id="fax" placeholder="Fax" value="{{ $toko->fax }}">
 						@if ($errors->has('fax'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('fax') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="website" id="website" placeholder="Website" value="">
+	                  <input type="text" class="form-control form-control-user" name="website" id="website" placeholder="Website" value="{{ $toko->website }}">
 						@if ($errors->has('website'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('website') }}</p></div>
 						@endif
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="kode_pos" id="kode_pos" placeholder="Kode Pos" value="">
+	                  <input type="text" class="form-control form-control-user" name="kode_pos" id="kode_pos" placeholder="Kode Pos" value="{{ $toko->kode_pos }}">
 						@if ($errors->has('kode_pos'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('kode_pos') }}</p></div>
 						@endif
