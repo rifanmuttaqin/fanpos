@@ -30,13 +30,32 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Master</span>
+          <span>Produk</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="{{ route('customer-url') }}">Customer</a>
-            <a class="collapse-item" href="{{ route('supplier-url') }}">Supplier</a>
+            <a class="collapse-item" href="">Daftar Produk</a>
+            <a class="collapse-item" href="">Penyesuaian</a>
+            <a class="collapse-item" href="">Pembelian</a>
+            <!-- <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Other Pages:</h6> -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Transaksi</span>
+        </a>
+        <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Login Screens:</h6> -->
+            <a class="collapse-item" href="">Penjualan</a>
+            <a class="collapse-item" href="">Pembelian</a>
+            <a class="collapse-item" href="">Pengembalian</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
           </div>
@@ -45,9 +64,16 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ route('customer-url') }}">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Transaksi</span></a>
+          <span>Customer</span></a>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('supplier-url') }}">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Supplier</span></a>
       </li>
 
       <!-- Nav Item - Customer -->
@@ -84,7 +110,8 @@
             <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
             <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
             <h6 class="collapse-header">Data Aplikasi</h6>
-            <a class="collapse-item" href="{{ route('toko') }}">Data Toko</a>
+            <a class="collapse-item" href="{{ route('toko') }}">Toko</a>
+            <a class="collapse-item" href="#">Pengguna</a>
           </div>
         </div>
       </li>

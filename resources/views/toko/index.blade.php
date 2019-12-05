@@ -58,7 +58,7 @@
 	                </div>
 
 	                <div class="form-group">
-	                  <input type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko" value="{{ $toko->alamat_toko }}">
+	                  <textarea type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko"> {{ $toko->alamat_toko }} </textarea>
 						@if ($errors->has('alamat_toko'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('alamat_toko') }}</p></div>
 						@endif
@@ -114,21 +114,21 @@
 
 			<div class="card col-sm-4">
 				<div style="text-align: center; padding-top: 20px">
-					<img src="" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
+					<img src="<?= $toko->logo_url != null ? URL::to('/').'/storage/toko_profile/'.$toko->logo_url : URL::to('/layout/assets/img/no_logo.png') ?>" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic">
 				</div>
 
 				<div style="text-align: center; padding-top: 10px">
 
 				<!-- Delete Button -->
 								
-				<div id="trash" style="">
+				<div id="trash" style="<?= $toko->logo_url != null ? '' : 'display: none' ?>;">
 					<button type="button" class="btn btn-info" id="delete_image">
 						<i class="fas fa-trash"></i>
 					</button>
 				</div>
 
 				<!-- Upload Form  -->
-				<div id="upload" style="display: none">
+				<div id="upload" style="<?= $toko->logo_url != null ? 'display: none' : '' ?>;">
 					<input type="file" name="file" id="file" class="inputfile" accept="image/x-png,image/gif,image/jpeg"/>
 					<label for="file"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload Logo</label>
 					<p> Gambar Max. 2 MB </p>
@@ -144,6 +144,69 @@
 @push('scripts')
 
 <script type="text/javascript">
+
+$( document ).ready(function() {
+
+	clearFile();
+
+	$("#file").change(function() {
+    
+	    var size = this.files[0].size;
+	  
+	    if(size >= 2000587)
+	    {
+	      swal('Ukuran file maksimal 2 MB', { button:false, icon: "error", timer: 1000});
+	      return false;
+	    }
+
+	    readURL(this);
+
+  	});
+
+	$('#delete_image').click(function() { 
+ 	
+	 	clearFile();   
+	    showUploadImage();
+
+	});
+
+});
+
+function showUploadImage()
+{
+    $('#profile_pic').attr('src', '{{URL::to('/layout/assets/img/no_logo.png')}}');
+    $('#upload').show();
+    $('#trash').hide();
+}
+
+function showTrashImage()
+{
+	$('#profile_pic').attr('src', '{{URL::to('/layout/assets/img/no_logo.png')}}');
+	$('#upload').hide();
+    $('#trash').show();
+}
+
+function readURL(input) {
+  
+  showTrashImage();
+
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#profile_pic').attr('src', e.target.result);
+    }
+  
+    reader.readAsDataURL(input.files[0]);
+  }
+
+}
+
+// Clear file sebelum diproses
+function clearFile()
+{
+	$('#file').val('');
+}
 
 </script>
 
