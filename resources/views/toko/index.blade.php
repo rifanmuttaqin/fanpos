@@ -58,7 +58,7 @@
 	                </div>
 
 	                <div class="form-group">
-	                  <textarea type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko"> {{ $toko->alamat_toko }} </textarea>
+	                  <textarea type="text" class="form-control form-control-user" name="alamat_toko" id="alamat_toko" placeholder="Alamat Toko">{{$toko->alamat_toko}}</textarea>
 						@if ($errors->has('alamat_toko'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('alamat_toko') }}</p></div>
 						@endif

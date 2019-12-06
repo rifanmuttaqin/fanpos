@@ -21,6 +21,7 @@ class User extends Authenticatable
 
     const ACCOUNT_TYPE_CREATOR = 10;
     const ACCOUNT_TYPE_ADMIN = 20;
+    const ACCOUNT_TYPE_EMPLOYEE = 30;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username','address', 'full_name','account_type','password','status','profile_picture'
+        'username','address', 'full_name','account_type','status','profile_picture'
     ];
 
 
@@ -57,6 +58,14 @@ class User extends Authenticatable
      public static function getUser()
      {
         return self::where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR])->get();
+     }
+
+     /**
+     * get active user
+     */
+     public static function getUserEmployee()
+     {
+        return self::where('status',self::USER_STATUS_ACTIVE)->where('account_type', [User::ACCOUNT_TYPE_EMPLOYEE])->get();
      }
 
     
@@ -101,6 +110,8 @@ class User extends Authenticatable
                return 'Creator';
             case static::ACCOUNT_TYPE_ADMIN:
                return 'Admin';
+            case static::ACCOUNT_TYPE_EMPLOYEE:
+               return 'Employee';
             default:
                 return '';
         }

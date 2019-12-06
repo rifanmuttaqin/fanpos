@@ -72,3 +72,17 @@ $router->group(['prefix' => 'toko'], function () use ($router) {
     $router->get('/',  ['as'=>'toko','uses' => 'TokoController@index']);
     $router->post('/update',  ['as'=>'update-toko','uses' => 'TokoController@update']);
 });
+
+// Untuk Profile
+$router->group(['prefix' => 'profile'], function () use ($router) {
+    $router->get('/',  ['as'=>'profile','uses' => 'ProfileController@index']);
+    $router->post('/update',  ['as'=>'update-profile','uses' => 'ProfileController@update']);
+    $router->post('/update-password',  ['as'=>'update-password','uses' => 'ProfileController@updatePassword']);
+});
+
+// Untuk Management Employee
+$router->group(['prefix' => 'employee'], function () use ($router) {
+    $router->get('/',  ['as'=>'employee','uses' => 'EmployeeController@index']);
+    $router->get('/create',  ['as'=>'create-employee','uses' => 'EmployeeController@create']);
+    $router->post('/update',  ['as'=>'update-employee','uses' => 'EmployeeController@update']);
+});

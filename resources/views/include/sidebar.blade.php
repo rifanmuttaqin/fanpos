@@ -111,7 +111,7 @@
             <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
             <h6 class="collapse-header">Data Aplikasi</h6>
             <a class="collapse-item" href="{{ route('toko') }}">Toko</a>
-            <a class="collapse-item" href="#">Pengguna</a>
+            <a class="collapse-item" href="{{ route('employee') }}">Pegawai</a>
           </div>
         </div>
       </li>
