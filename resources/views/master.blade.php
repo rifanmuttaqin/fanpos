@@ -13,7 +13,7 @@
 
   <!-- Custom fonts for this template-->
   <link href="<?= URL::to('/'); ?>/layout/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="<?= URL::to('/'); ?>/layout/assets/css/fontgoogleapis.css" rel="stylesheet">
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery/jquery.min.js"></script>
@@ -27,11 +27,11 @@
   <link href="<?= URL::to('/'); ?>/layout/assets/css/additional.css" rel="stylesheet">
 
   <!-- Sweat Alert -->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="<?= URL::to('/'); ?>/layout/assets/js/sweetalert.min.js"></script>
 
   <!-- DataTable -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer>
+  <link rel="stylesheet" type="text/css" href="<?= URL::to('/'); ?>/layout/assets/css/dataTables.css">
+  <script type="text/javascript" charset="utf8" src="<?= URL::to('/'); ?>/layout/assets/js/dataTables.js" defer>
   </script>
 
   @stack('scripts')

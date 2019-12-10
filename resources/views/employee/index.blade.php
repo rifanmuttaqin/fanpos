@@ -1,5 +1,3 @@
-<!-- Tambah dirubah dari submit ke AJAX -->
-
 @extends('master')
  
 @section('title', 'Pegawai')
@@ -57,12 +55,47 @@
 
 @endsection
 
+@section('modal')
+
+<div class="modal fade" id="passwordModal" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <p class="modal-title"></p>
+      </div>
+      <div class="modal-body">
+        
+        <div class="form-group col-md-12">
+          <label>Password</label>
+          <input type="password" class="form-control" value="" id="password" name="password">
+        </div>
+
+        <div class="form-group col-md-12">
+          <label>Re Password</label>
+          <input type="password" class="form-control" value="" id="password_confirmation" name="password_confirmation">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="modal-footer">
+        <button type="button" id="update_password" class="btn btn-info pull-left">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@endsection
+
 @push('scripts')
 
 <script type="text/javascript">
 
 var iduser;
 var table;
+
+$( document ).ready(function() {
+
+});
 
 $(function () {
 

@@ -17,14 +17,14 @@ class TblUserEmployee extends Migration
             $table->bigIncrements('id', 20);
             $table->unsignedBigInteger('user_id');
             $table->string('nik');
-            $table->integer('jenis_kelamin')->default(10);
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->integer('agama')->default(10);
-            $table->integer('status_pernikahan')->default(10);
+            $table->integer('jenis_kelamin')->default(10)->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->integer('agama')->default(10)->nullable();
+            $table->integer('status_pernikahan')->default(10)->nullable();
             $table->string('phone');
-            $table->date('tanggal_masuk');
-            $table->integer('tipe_karyawan')->default(10);
+            $table->date('tanggal_masuk')->nullable();
+            $table->integer('tipe_karyawan')->default(10)->nullable();
             $table->string('keterangan')->nullable();
 
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

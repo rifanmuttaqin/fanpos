@@ -85,4 +85,5 @@ $router->group(['prefix' => 'employee'], function () use ($router) {
     $router->get('/',  ['as'=>'employee','uses' => 'EmployeeController@index']);
     $router->get('/create',  ['as'=>'create-employee','uses' => 'EmployeeController@create']);
     $router->post('/update',  ['as'=>'update-employee','uses' => 'EmployeeController@update']);
+    $router->post('/store',  ['as'=>'store-employee','uses' => 'EmployeeController@store']);
 });

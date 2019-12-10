@@ -230,6 +230,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'User' => App\Model\User\User::class,
+        'UserEmployee' => App\Model\User\UserEmployee::class,
     ],
 
 ];
