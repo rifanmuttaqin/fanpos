@@ -44,6 +44,7 @@
 					@csrf
 
 					<div class="form-group">
+					<label>Nama</label>
 	                  <input type="text" class="form-control form-control-user" name ="nama" id="nama" placeholder="Nama Supplier" value="{{ $supplier->nama }}">
 					@if ($errors->has('nama'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama') }}</p></div>
@@ -51,6 +52,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Alamat</label>
 	                  <input type="text" class="form-control form-control-user" name="alamat" id="alamat" placeholder="Alamat" value="{{ $supplier->alamat }}">
 						@if ($errors->has('alamat'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('alamat') }}</p></div>
@@ -58,6 +60,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Nomor Telfon</label>
 	                  	<input type="text" class="form-control form-control-user" name="nomor_telfon" id="nomor_telfon" placeholder="Nomor Telfon" value="{{ $supplier->nomor_telfon }}">
 						@if ($errors->has('nomor_telfon'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('nomor_telfon') }}</p></div>
@@ -65,6 +68,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Email</label>
 	                  <input type="email" class="form-control form-control-user" value="{{$supplier->email}}" name="email" id="email" placeholder="Email">
 						@if ($errors->has('email'))
 							<div><p style="color: red"><span>&#42;</span> {{ $errors->first('email') }}</p></div>

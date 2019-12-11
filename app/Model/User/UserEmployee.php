@@ -104,4 +104,9 @@ class UserEmployee extends Model
                 return '';
         }
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Model\User\User');
+    }
 }

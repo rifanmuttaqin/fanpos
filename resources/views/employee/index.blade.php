@@ -90,12 +90,76 @@
 
 <script type="text/javascript">
 
-var iduser;
+var idemployee;
 var table;
 
 $( document ).ready(function() {
 
+  clearForm();
+
+  $('#update_password').click(function() { 
+
+    var password = $('#password').val();
+    var password_confirmation = $('#password_confirmation').val();
+    
+    if(password != null && password_confirmation != null)
+    {
+      $.ajax({
+        type:'POST',
+        url: base_url + '/employee/update-password',
+        data:{
+              idemployee:idemployee, 
+              "_token": "{{ csrf_token() }}",
+              password : password,
+              password_confirmation : password_confirmation
+        },
+        success:function(data) {
+          if(data.status != false)
+          {
+            swal(data.message, { button:false, icon: "success", timer: 1000});
+            $("#passwordModal .close").click();
+            clearForm();
+          }
+          else
+          {
+            swal(data.message, { button:false, icon: "error", timer: 1000});
+          }
+          table.ajax.reload();
+        },
+        error: function(error) {
+          swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+        }
+      });
+    }
+  })
+
 });
+
+function clearForm()
+{
+  $('#password').val('');
+  $('#password_confirmation').val('');
+}
+
+function btnDel(id)
+{
+  idemployee = id;
+  hapus(idemployee);
+}
+
+function btnPass(id)
+{
+  idemployee = id;
+  $('#passwordModal').modal('toggle');
+}
+
+function btnUbah(id)
+{
+  idemployee = id;
+  var url = '{{ route("update-employee", ":idemployee") }}';
+  url     = url.replace(':idemployee', idemployee);
+  window.location.href = url;
+}
 
 $(function () {
 
@@ -115,6 +179,43 @@ $(function () {
       ]
   });
 });
+
+function hapus()
+{
+  swal({
+      title: "Menghapus",
+      text: 'Apakah anda yakin ingin menghapus ini ?', 
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      $.ajax({
+        type:'POST',
+        url: base_url + '/employee/delete',
+        data:{
+          idemployee:idemployee, 
+          "_token": "{{ csrf_token() }}",},
+        success:function(data) {
+          
+          if(data.status != false)
+          {
+            swal(data.message, { button:false, icon: "success", timer: 1000});
+          }
+          else
+          {
+            swal(data.message, { button:false, icon: "error", timer: 1000});
+          }
+          table.ajax.reload();
+        },
+        error: function(error) {
+          swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+        }
+      });      
+    }
+  });
+}
 
 </script>
 

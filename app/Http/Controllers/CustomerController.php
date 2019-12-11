@@ -126,6 +126,28 @@ class CustomerController extends Controller
     /**
      * @return void
      */
+    public function deleteimage(Request $request)
+    {
+        if ($request->ajax()) {
+            
+            DB::beginTransaction();
+            $customer = Customer::findOrFail($request->customer_id);
+            $customer->url_profile_pic = null;
+
+            if(!$customer->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,null,'Gambar gagal dihapus');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','Gambar berhasil dihapus');
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function delete(Request $request)
     {
         if ($request->ajax()) {
@@ -181,11 +203,7 @@ class CustomerController extends Controller
 
             $customer->url_profile_pic = $fileName;
         }
-        else
-        {
-            $customer->url_profile_pic = null;
-        }
-
+        
         if(!$customer->save())
         {
             // $this->systemLog(true,'Gagal Mengupdate Customer');

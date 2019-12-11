@@ -107,6 +107,28 @@ class ProfileController extends Controller
     /**
      * @return void
      */
+    public function deleteimage(Request $request)
+    {
+        if ($request->ajax()) {
+            
+            DB::beginTransaction();
+            $user = User::findOrFail($request->employee_id);
+            $user->profile_picture = null;
+
+            if(!$user->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,null,'Gambar gagal dihapus');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','Gambar berhasil dihapus');
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function updatePassword(UpdatePasswordRequest $request)
     {
         if ($request->ajax()) {

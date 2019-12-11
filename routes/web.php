@@ -78,12 +78,16 @@ $router->group(['prefix' => 'profile'], function () use ($router) {
     $router->get('/',  ['as'=>'profile','uses' => 'ProfileController@index']);
     $router->post('/update',  ['as'=>'update-profile','uses' => 'ProfileController@update']);
     $router->post('/update-password',  ['as'=>'update-password','uses' => 'ProfileController@updatePassword']);
+    $router->post('/deleteimage',  ['as'=>'deleteimage','uses' => 'ProfileController@deleteimage']);
 });
 
 // Untuk Management Employee
 $router->group(['prefix' => 'employee'], function () use ($router) {
     $router->get('/',  ['as'=>'employee','uses' => 'EmployeeController@index']);
     $router->get('/create',  ['as'=>'create-employee','uses' => 'EmployeeController@create']);
-    $router->post('/update',  ['as'=>'update-employee','uses' => 'EmployeeController@update']);
+    $router->get('/update/{idemployee}',  ['as'=>'update-employee','uses' => 'EmployeeController@update']);
+    $router->post('/update',  ['as'=>'doupdate-employee','uses' => 'EmployeeController@doupdate']);
     $router->post('/store',  ['as'=>'store-employee','uses' => 'EmployeeController@store']);
+    $router->post('/update-password',  ['as'=>'employee-update-password','uses' => 'EmployeeController@editPassword']);
+    $router->post('/delete',  ['as'=>'delete-employee','uses' => 'EmployeeController@destroy']);
 });

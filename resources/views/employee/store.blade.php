@@ -12,6 +12,7 @@
 					@csrf
 
 					<div class="form-group">
+					<label>NIK</label>
 	                  <input type="text" class="form-control form-control-user" name ="nik" id="nik" placeholder="NIK">
 					@if ($errors->has('nik'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nik') }}</p></div>
@@ -19,6 +20,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Username</label>
 	                  <input type="text" class="form-control form-control-user" name ="username" id="username" placeholder="Username">
 					@if ($errors->has('username'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('username') }}</p></div>
@@ -26,6 +28,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Password</label>
 	                  <input type="password" class="form-control form-control-user" name ="password" id="password" placeholder="Password">
 					@if ($errors->has('password'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('password') }}</p></div>
@@ -33,6 +36,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Repassword</label>
 	                  <input type="password" class="form-control form-control-user" name ="password_confirmation" id="password_confirmation" placeholder="Repassword">
 					@if ($errors->has('repassword'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('repassword') }}</p></div>
@@ -40,6 +44,7 @@
 	                </div>
 
 					<div class="form-group">
+					<label>Nama Pegawai</label>
 	                  <input type="text" class="form-control form-control-user" name ="full_name" id="full_name" placeholder="Nama Pegawai">
 					@if ($errors->has('full_name'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('full_name') }}</p></div>
@@ -47,6 +52,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Email</label>
 	                  <input type="text" class="form-control form-control-user" name ="email" id="email" placeholder="Email">
 					@if ($errors->has('email'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('email') }}</p></div>
@@ -54,6 +60,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Alamat</label>
 	                  <textarea type="text" class="form-control form-control-user" name ="address" id="address" placeholder="Alamat"></textarea>
 					@if ($errors->has('address'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('address') }}</p></div>
@@ -61,8 +68,8 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Jenis Kelamin</label>
 						<select class="form-control form-control-user" id="jenis_kelamin" name="jenis_kelamin">
-						<option value="" selected disabled>-------- Jenis Kelamin --------</option>
 						<option value="{{ UserEmployee::JENIS_KELAMIN_LAKI_LAKI }}">Laki Laki</option>
 						<option value="{{ UserEmployee::JENIS_KELAMIN_PEREMPUAN }}">Perempuan</option>
 						</select> 
@@ -72,8 +79,8 @@
 	                </div>
 
 	                <div class="form-group">
+	                	<label>Agama</label>
 						<select class="form-control form-control-user" id="agama" name="agama">
-						<option value="" selected disabled>-------- Agama --------</option>
 						<option value="{{UserEmployee::AGAMA_ISLAM}}">Islam</option>
 						<option value="{{UserEmployee::AGAMA_KRISTEN}}">Kristen</option>
 						<option value="{{UserEmployee::AGAMA_BUDHA}}">Budha</option>
@@ -86,6 +93,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Tempat Lahir</label>
 	                  <input type="text" class="form-control form-control-user" name ="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir">
 					@if ($errors->has('tempat_lahir'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('tempat_lahir') }}</p></div>
@@ -93,15 +101,16 @@
 	                </div>
 
 	                <div class="form-group">
-	                  <input placeholder="Tanggal Lahir" class="form-control form-control-user" type="text" onfocus="(this.type='date')"  id="tanggal_lahir" name="tanggal_lahir"> 
+	                <label>Tanggal Lahir</label>
+	                  <input type="date" class="form-control form-control-user" type="text" id="tanggal_lahir" name="tanggal_lahir"> 
 					@if ($errors->has('tanggal_lahir'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('tanggal_lahir') }}</p></div>
 					@endif
 	                </div>
 
 	                <div class="form-group">
+	                <label>Status Pernikahan</label>
 						<select class="form-control form-control-user" id="status_pernikahan" name="status_pernikahan">
-						<option value="" selected disabled>-------- Status Pernikahan --------</option>
 						<option value="{{UserEmployee::STATUS_BELUM_MENIKAH}}">Belum Menikah</option>
 						<option value="{{UserEmployee::STATUS_MENIKAH}}">Menikah</option>
 						</select> 
@@ -111,6 +120,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Phone</label>
 	                  <input type="text" class="form-control form-control-user" name ="phone" id="phone" placeholder="Nomor Telfon">
 					@if ($errors->has('phone'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('phone') }}</p></div>
@@ -118,15 +128,16 @@
 	                </div>
 
 	                <div class="form-group">
-	                  <input placeholder="Tanggal Masuk" class="form-control form-control-user" type="text" onfocus="(this.type='date')"  id="tanggal_masuk" name="tanggal_masuk"> 
+	                <label>Tanggal Masuk</label>
+	                  <input type="date" class="form-control form-control-user" type="text" id="tanggal_masuk" name="tanggal_masuk"> 
 					@if ($errors->has('tanggal_masuk'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('tanggal_masuk') }}</p></div>
 					@endif
 	                </div>
 
 	                <div class="form-group">
+	                <label>Tipe Karyawan</label>
 						<select class="form-control form-control-user" id="tipe_karyawan" name="tipe_karyawan">
-						<option value="" selected disabled>-------- Tipe Karyawan --------</option>
 						<option value="{{UserEmployee::TIPE_KARYAWAN_KONTRAK}}">Kontrak</option>
 						<option value="{{UserEmployee::TIPE_KARYAWAN_TETAP}}">Tetap</option>
 						</select> 
@@ -136,6 +147,7 @@
 	                </div>
 
 	                <div class="form-group">
+	                <label>Keterangan</label>
 	                  <textarea type="text" class="form-control form-control-user" name ="keterangan" id="keterangan" placeholder="Keterangan"></textarea>
 					@if ($errors->has('keterangan'))
 					    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('keterangan') }}</p></div>

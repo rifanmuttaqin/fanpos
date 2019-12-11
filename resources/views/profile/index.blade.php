@@ -175,8 +175,8 @@ $( document ).ready(function() {
 
 	$('#delete_image').click(function() { 
  	
-	 	clearFile();   
-	    showUploadImage();
+	 	 clearFile();   
+	   showUploadImage();
 
 	});
 

@@ -116,4 +116,12 @@ class User extends Authenticatable
                 return '';
         }
     }
+
+    /**
+     * Get the employee record associated with the user.
+     */
+    public function employee()
+    {
+        return $this->hasOne('App\Model\User\UserEmployee');
+    }
 }
