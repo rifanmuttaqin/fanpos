@@ -36,6 +36,7 @@ $router->group(['prefix' => 'customer'], function () use ($router) {
     $router->post('/get-detail', ['as'=>'detail-customer', 'uses' => 'CustomerController@show']);
     $router->get('/update/{id}',  ['as'=>'view-update-customer','uses' => 'CustomerController@viewupdate']);
     $router->post('/update',  ['as'=>'doupdatecustomer','uses' => 'CustomerController@doupdate']);
+    $router->post('/deleteimage',  ['as'=>'deleteimagecustomer','uses' => 'CustomerController@deleteimage']);
 });
 
 // Route Supplier 
@@ -47,6 +48,7 @@ $router->group(['prefix' => 'supplier'], function () use ($router) {
     $router->post('/get-detail', ['as'=>'detail-supplier', 'uses' => 'SupplierController@show']);
     $router->get('/update/{id}',  ['as'=>'view-update','uses' => 'SupplierController@viewupdate']);
     $router->post('/update',  ['as'=>'doupdate','uses' => 'SupplierController@doupdate']);
+    $router->post('/deleteimage',  ['as'=>'deleteimagesupplier','uses' => 'SupplierController@deleteimage']);
 });
 
 // Untuk Kategori

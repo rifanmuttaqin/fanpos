@@ -131,7 +131,7 @@ class CustomerController extends Controller
         if ($request->ajax()) {
             
             DB::beginTransaction();
-            $customer = Customer::findOrFail($request->customer_id);
+            $customer = Customer::findOrFail($request->customerid);
             $customer->url_profile_pic = null;
 
             if(!$customer->save())

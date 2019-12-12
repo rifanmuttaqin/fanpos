@@ -156,6 +156,28 @@ class SupplierController extends Controller
     /**
      * @return void
      */
+    public function deleteimage(Request $request)
+    {
+        if ($request->ajax()) {
+            
+            DB::beginTransaction();
+            $supplier = Supplier::findOrFail($request->supplierid);
+            $supplier->url_profile_pic = null;
+
+            if(!$supplier->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,null,'Gambar gagal dihapus');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','Gambar berhasil dihapus');
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function doupdate(UpdateSupplierRequest $request)
     {
         DB::beginTransaction();
@@ -180,10 +202,6 @@ class SupplierController extends Controller
             Storage::disk('local')->put('public/supplier_profile/'.$fileName, $img, 'public');
 
             $supplier->url_profile_pic = $fileName;
-        }
-        else
-        {
-            $supplier->url_profile_pic = null;
         }
 
         if(!$supplier->save())

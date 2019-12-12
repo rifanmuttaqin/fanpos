@@ -1,5 +1,3 @@
-<!-- Update Gambar Belum Selesai Clear File Masih Trouble-->
-
 @extends('master')
 
 @section('title', '')
@@ -140,10 +138,55 @@ $( document ).ready(function() {
   	});
 
 	$('#delete_image').click(function() { 
- 	
-	 	clearFile();   
-	    showUploadImage();
+	 	
+	 	var customerid = '{{$customer->id}}';
 
+		swal({
+			title: "Are you sure?",
+			text: "Once deleted, you will not be able to recover this imaginary file!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				$.ajax({
+			        type:'POST',
+			        url: base_url + '/customer/deleteimage',
+			        data:
+			        {
+			          "_token": "{{ csrf_token() }}",
+			          customerid : customerid,
+			        },
+			        success:function(data) {
+			          if(data.status != false)
+			          {
+			            swal(data.message, { button:false, icon: "success", timer: 1000});
+			            clearFile();   
+				   		showUploadImage();
+			          }
+			          else
+			          {
+			            swal(data.message, { button:false, icon: "error", timer: 1000});
+			          }
+			        },
+			        error: function(error) {
+			          var err = eval("(" + error.responseText + ")");
+			          var array_1 = $.map(err, function(value, index) {
+			              return [value];
+			          });
+			          var array_2 = $.map(array_1, function(value, index) {
+			              return [value];
+			          });
+			          var message = JSON.stringify(array_2);
+			          swal(message, { button:false, icon: "error", timer: 1000});
+			        }
+		    	});
+					
+				} else {
+					swal("Gambar Aman");
+			}
+		});
 	});
 
 });
