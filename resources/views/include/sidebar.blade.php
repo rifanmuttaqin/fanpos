@@ -35,7 +35,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="">Daftar Produk</a>
+            <a class="collapse-item" href="{{route('product')}}">Daftar Produk</a>
             <a class="collapse-item" href="">Penyesuaian</a>
             <a class="collapse-item" href="">Pembelian</a>
             <!-- <div class="collapse-divider"></div>
@@ -58,6 +58,36 @@
             <a class="collapse-item" href="">Pengembalian</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Stock</span>
+        </a>
+        <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Login Screens:</h6> -->
+            <a class="collapse-item" href="">History</a>
+            <!-- <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Other Pages:</h6> -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Promo Toko</span>
+        </a>
+        <div id="collapsePages4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Login Screens:</h6> -->
+            <a class="collapse-item" href="">Diskon</a>
           </div>
         </div>
       </li>
@@ -109,12 +139,34 @@
             <h6 class="collapse-header">Data Pendukung</h6>
             <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
             <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
+            <a class="collapse-item" href="">Tax / Pajak</a>
             <h6 class="collapse-header">Data Aplikasi</h6>
             <a class="collapse-item" href="{{ route('toko') }}">Toko</a>
             <a class="collapse-item" href="{{ route('employee') }}">Pegawai</a>
           </div>
         </div>
       </li>
+
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Sistem
+      </div>
+
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-eye"></i>
+          <span>Log Aktifitas</span>
+        </a>
+        <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="">Log Sistem</a>
+            <a class="collapse-item" href="">Log Print Laporan</a>
+          </div>
+        </div>
+      </li>
+
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

@@ -1,5 +1,3 @@
-<!-- Note pada page ini posisi tag form masih belum benar, harap dicari solusinya kemudian -->
-
 @extends('master')
 
 @section('title', '')

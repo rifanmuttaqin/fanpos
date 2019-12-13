@@ -19,13 +19,19 @@
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery/jquery.min.js"></script>
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
   <!-- Core plugin JavaScript-->
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
+  <!-- Select Select-->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+  
   <!-- Custom styles for this template-->
   <link href="<?= URL::to('/'); ?>/layout/assets/css/sb-admin-2.min.css" rel="stylesheet">
   <link href="<?= URL::to('/'); ?>/layout/assets/css/additional.css" rel="stylesheet">
-
+  
   <!-- Sweat Alert -->
   <script src="<?= URL::to('/'); ?>/layout/assets/js/sweetalert.min.js"></script>
 
@@ -33,6 +39,9 @@
   <link rel="stylesheet" type="text/css" href="<?= URL::to('/'); ?>/layout/assets/css/dataTables.css">
   <script type="text/javascript" charset="utf8" src="<?= URL::to('/'); ?>/layout/assets/js/dataTables.js" defer>
   </script>
+
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
   @stack('scripts')
 
@@ -130,7 +139,8 @@
 </script>
 
 <!-- Custom scripts for all pages-->
-<script src="<?= URL::to('/'); ?>/layout/assets/js/sb-admin-2.min.js"></script>
+<script src="<?= URL::to('/'); ?>/layout/assets/js/sb-admin-2.js"></script>
+<!-- <script src="<?= URL::to('/'); ?>/layout/assets/js/sb-admin-2.min.js"></script> -->
 
 <!-- Page level plugins -->
 <!-- <script src="<?= URL::to('/'); ?>/layout/assets/vendor/chart.js/Chart.min.js"></script> -->

@@ -93,3 +93,10 @@ $router->group(['prefix' => 'employee'], function () use ($router) {
     $router->post('/update-password',  ['as'=>'employee-update-password','uses' => 'EmployeeController@editPassword']);
     $router->post('/delete',  ['as'=>'delete-employee','uses' => 'EmployeeController@destroy']);
 });
+
+// Untuk Produk
+$router->group(['prefix' => 'product'], function () use ($router) {
+    $router->get('/',  ['as'=>'product','uses' => 'ProductController@index']);
+    $router->get('/create',  ['as'=>'create-product','uses' => 'ProductController@create']);
+    $router->post('/store',  ['as'=>'store-product','uses' => 'ProductController@store']);
+});
