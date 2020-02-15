@@ -3,7 +3,7 @@
 namespace App\Model\User;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -12,15 +12,16 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Authenticatable
 {
-    // use HasRoles;
-    protected $table = 'tbl_user';
-    protected $guard_name = 'web';
+    use HasRoles;
 
-    const USER_STATUS_ACTIVE = 10;
-    const USER_STATUS_NOT_ACTIVE = 20;
+    protected $table        = 'tbl_user';
+    protected $guard_name   = 'web';
 
-    const ACCOUNT_TYPE_CREATOR = 10;
-    const ACCOUNT_TYPE_ADMIN = 20;
+    const USER_STATUS_ACTIVE        = 10;
+    const USER_STATUS_NOT_ACTIVE    = 20;
+
+    const ACCOUNT_TYPE_CREATOR  = 10;
+    const ACCOUNT_TYPE_ADMIN    = 20;
     const ACCOUNT_TYPE_EMPLOYEE = 30;
 
     /**

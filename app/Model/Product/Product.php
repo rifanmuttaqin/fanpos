@@ -9,11 +9,11 @@ class Product extends Model
     protected $table        = 'tbl_product';
     protected $guard_name   = 'web';
 
-    const PRODUCT_HAS_VARIANT = 10;
-    const PRODUCT_HAS_NOT_VARIANT = 20;
+    const PRODUCT_HAS_VARIANT       = 10;
+    const PRODUCT_HAS_NOT_VARIANT   = 20;
 
-    const PRODUCT_HAS_GROSIR = 10;
-    const PRODUCT_HAS_NOT_GROSIR = 20;
+    const PRODUCT_HAS_GROSIR        = 10;
+    const PRODUCT_HAS_NOT_GROSIR    = 20;
 
     /**
 	* The attributes that are mass assignable.

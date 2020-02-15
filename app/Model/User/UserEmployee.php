@@ -13,16 +13,16 @@ class UserEmployee extends Model
     const JENIS_KELAMIN_LAKI_LAKI = 10;
     const JENIS_KELAMIN_PEREMPUAN = 20;
 
-    const AGAMA_ISLAM = 10;
-    const AGAMA_KRISTEN = 20;
-    const AGAMA_BUDHA = 30;
-    const AGAMA_KONGHUCU = 40;
-    const AGAMA_KATOLIK = 50;
+    const AGAMA_ISLAM       = 10;
+    const AGAMA_KRISTEN     = 20;
+    const AGAMA_BUDHA       = 30;
+    const AGAMA_KONGHUCU    = 40;
+    const AGAMA_KATOLIK     = 50;
 
-    const STATUS_BELUM_MENIKAH = 10;
-    const STATUS_MENIKAH = 20;
+    const STATUS_BELUM_MENIKAH  = 10;
+    const STATUS_MENIKAH        = 20;
 
-    const TIPE_KARYAWAN_TETAP = 10;
+    const TIPE_KARYAWAN_TETAP   = 10;
     const TIPE_KARYAWAN_KONTRAK = 20;
 
     /**
