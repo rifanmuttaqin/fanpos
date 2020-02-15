@@ -30,4 +30,14 @@ class Kategori extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * return kategori name
+     *
+     * @var string
+     */
+    public static function getKategori($search = null)
+    {
+        return self::where('nama_kategori', 'like', '%'.$search.'%')->get();
+    }
 }

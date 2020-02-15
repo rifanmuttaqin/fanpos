@@ -58,6 +58,7 @@ $router->group(['prefix' => 'kategori'], function () use ($router) {
     $router->post('/show',  ['as'=>'show-kategori','uses' => 'KategoriController@show']);
     $router->post('/update',  ['as'=>'update-kategori','uses' => 'KategoriController@update']);
     $router->post('/delete',  ['as'=>'delete-kategori','uses' => 'KategoriController@destroy']);
+    $router->post('/list',  ['as'=>'list-kategori','uses' => 'KategoriController@list']);
 });
 
 // Untuk Satuan
@@ -67,6 +68,7 @@ $router->group(['prefix' => 'satuan'], function () use ($router) {
     $router->post('/show',  ['as'=>'show-satuan','uses' => 'SatuanController@show']);
     $router->post('/update',  ['as'=>'update-satuan','uses' => 'SatuanController@update']);
     $router->post('/delete',  ['as'=>'delete-satuan','uses' => 'SatuanController@destroy']);
+    $router->post('/list',  ['as'=>'list-satuan','uses' => 'SatuanController@list']);
 });
 
 // Untuk Toko

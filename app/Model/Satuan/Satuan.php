@@ -30,4 +30,15 @@ class Satuan extends Model
      * @var array
      */
     protected $hidden = [];
+
+
+     /**
+     * return satuan name
+     *
+     * @var string
+     */
+    public static function getSatuan($search = null)
+    {
+        return self::where('nama_satuan', 'like', '%'.$search.'%')->get();
+    }
 }

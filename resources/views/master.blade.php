@@ -24,8 +24,8 @@
   <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Select Select-->
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <link href="<?= URL::to('/'); ?>/layout/assets/css/select2.min.css" rel="stylesheet" />
+  <script src="<?= URL::to('/'); ?>/layout/assets/js/select2.min.js"></script>
 
   
   <!-- Custom styles for this template-->
@@ -40,8 +40,9 @@
   <script type="text/javascript" charset="utf8" src="<?= URL::to('/'); ?>/layout/assets/js/dataTables.js" defer>
   </script>
 
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <link href="<?= URL::to('/'); ?>/layout/assets/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+  <script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap-toggle.min.js"></script>
 
   @stack('scripts')
 

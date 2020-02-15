@@ -94,6 +94,45 @@ class KategoriController extends Controller
         }
     }
 
+
+    /**
+     * Display all resources. for select2
+     *
+     * @param  \App\Model\Kategori\Kategori  $satuan
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            
+            $data_kategori = null;
+
+            if($request->has('search'))
+            {
+                $data_kategori = Kategori::getKategori($request->get('search'));
+            }
+            else
+            {
+                $data_kategori = Kategori::getKategori();
+            }
+
+            $arr_data  = array();
+
+            if($data_kategori != null)
+            {
+                $key = 0;
+
+                foreach ($data_kategori as $data) {
+                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['text'] = $data->nama_kategori;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
+    }
+
     
     /**
      * Update the specified resource in storage.

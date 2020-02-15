@@ -6,6 +6,9 @@ use App\Model\Satuan\Satuan;
 use App\Http\Requests\Satuan\StoreSatuanRequest;
 use App\Http\Requests\Satuan\UpdateSatuanRequest;
 use App\Http\Resources\Satuan\SatuanResource;
+use App\Http\Resources\Satuan\SatuanCollection;
+
+use Illuminate\Support\Collection;
 
 
 use Illuminate\Http\Request;
@@ -94,6 +97,44 @@ class SatuanController extends Controller
         }
     }
 
+
+    /**
+     * Display all resources. for select2
+     *
+     * @param  \App\Model\Satuan\Satuan  $satuan
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            
+            $data_satuan = null;
+
+            if($request->has('search'))
+            {
+                $data_satuan = Satuan::getSatuan($request->get('search'));
+            }
+            else
+            {
+                $data_satuan = Satuan::getSatuan();
+            }
+
+            $arr_data  = array();
+
+            if($data_satuan != null)
+            {
+                $key = 0;
+
+                foreach ($data_satuan as $data) {
+                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['text'] = $data->nama_satuan;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
+    }
     
     /**
      * Update the specified resource in storage.
