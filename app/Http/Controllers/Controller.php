@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Model\ActionLog\ActionLog;
 
 use Auth;
-
+use Carbon\Carbon;
 use DB;
 
 class Controller extends BaseController
@@ -63,11 +63,11 @@ class Controller extends BaseController
         DB::beginTransaction();
 
         $action_log = new ActionLog();
-        $action_log->action_type = ActionLog::TYPE_GENERAL;
-        $action_log->is_error = $is_error;
+        $action_log->action_type    = ActionLog::TYPE_GENERAL;
+        $action_log->is_error       = $is_error;
         $action_log->action_message = $action_message;
-        $action_log->user_id = $user->id;
-        $action_log->date = date('Y-m-d H:i:s');
+        $action_log->user_id        = $user->id;
+        $action_log->date           = Carbon::now();
 
         if(!$action_log->save())
         {

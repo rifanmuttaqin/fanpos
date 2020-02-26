@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Database;
+namespace App\Console\Commands\Role;
 
 use Illuminate\Console\Command;
 
@@ -14,7 +14,7 @@ class RoleSeed extends Command
      *
      * @var string
      */
-    protected $signature = 'database:role:seed';
+    protected $signature = 'role:role:seed';
 
     /**
      * The console command description.

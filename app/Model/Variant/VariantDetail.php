@@ -17,8 +17,8 @@ class VariantDetail extends Model
     protected $fillable = [
         'variant_id', 
         'option',
-        'harga',
-        'stock'
+        'harga_jual',
+        'harga_beli'
     ];
 
     /**

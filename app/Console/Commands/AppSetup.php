@@ -56,7 +56,7 @@ class AppSetup extends Command
 
         $this->line('Menyuntikan Role Ke Database.');
         $this->line('Butuh beberapa saat mohon bersabar......');
-        Artisan::call('database:role:seed');
+        Artisan::call('role:role:seed');
 
         $this->line('Menyuntikan Data Toko Sementara.');
         Artisan::call('database:toko:seed');

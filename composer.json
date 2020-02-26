@@ -13,7 +13,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "nesbot/carbon": "^2.27",
+        "nesbot/carbon": "^2.30",
         "spatie/laravel-permission": "^3.6",
         "yajra/laravel-datatables-oracle": "^9.7"
     },
