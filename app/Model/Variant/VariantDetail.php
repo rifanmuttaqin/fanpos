@@ -17,6 +17,7 @@ class VariantDetail extends Model
     protected $fillable = [
         'variant_id', 
         'option',
+        'variant_code',
         'harga_jual',
         'harga_beli'
     ];
@@ -35,5 +36,24 @@ class VariantDetail extends Model
     public function variant()
     {
         return $this->hasOne('App\Model\Variant\Variant');
+    }
+    
+    /**
+     *
+     * @var array
+     */
+    public function makevariantCode($product_name)
+    {
+        $characters = $product_name . time();
+        $length = 9;
+
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
+        return $randomString;
     }
 }

@@ -17,6 +17,7 @@ class TblVariantDetail extends Migration
             $table->bigIncrements('id', 20);
             $table->unsignedBigInteger('variant_id');
             $table->string('option')->nullable();
+            $table->char('variant_code',9)->unique();
             $table->double('harga_jual');
             $table->double('harga_beli');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

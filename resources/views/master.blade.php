@@ -21,7 +21,7 @@
 
 
   <!-- Core plugin JavaScript-->
-  <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- <script src="<?= URL::to('/'); ?>/layout/assets/vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
   <!-- Select Select-->
   <link href="<?= URL::to('/'); ?>/layout/assets/css/select2.min.css" rel="stylesheet" />

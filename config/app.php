@@ -232,6 +232,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'User' => App\Model\User\User::class,
         'UserEmployee' => App\Model\User\UserEmployee::class,
+        'Product' => App\Model\Product\Product::class,
     ],
 
 ];

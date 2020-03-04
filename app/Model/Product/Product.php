@@ -48,4 +48,22 @@ class Product extends Model
     {
         return $this->hasOne('App\Model\Variant\Variant');
     }
+
+    /**
+     *
+     * @var array
+     */
+    public function katergori()
+    {
+        return $this->hasOne('App\Model\Kategori\Kategori');
+    }
+
+    /**
+     *
+     * @var array
+     */
+    public function productimage()
+    {
+        return $this->hasMany('App\Model\Product\ProductImage');
+    }
 }

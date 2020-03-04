@@ -100,5 +100,8 @@ $router->group(['prefix' => 'employee'], function () use ($router) {
 $router->group(['prefix' => 'product'], function () use ($router) {
     $router->get('/',  ['as'=>'product','uses' => 'ProductController@index']);
     $router->get('/create',  ['as'=>'create-product','uses' => 'ProductController@create']);
+    $router->get('/update/{id}',  ['as'=>'update-product','uses' => 'ProductController@viewupdate']);
     $router->post('/store',  ['as'=>'store-product','uses' => 'ProductController@store']);
+    $router->post('/update',  ['as'=>'update-product','uses' => 'ProductController@update']);
+    $router->post('/delete',  ['as'=>'delete-product','uses' => 'ProductController@destroy']);
 });

@@ -7,13 +7,13 @@
 <div class="card col-sm-12">
 	<div class="card-body col-sm-12">
 	
-	<form  method="post" action="{{ route('store-product') }}" enctype="multipart/form-data">
+	<form  method="post" action="{{ route('update-product') }}" enctype="multipart/form-data">
 
 	@csrf
 
 	<div class="form-group">
 	<label>Nama Produk</label>
-	  <input type="text" class="form-control form-control-user" name ="nama_product" id="nama_product">
+	  <input value="{{ $product->nama_product }}" type="text" class="form-control form-control-user" name ="nama_product" id="nama_product">
 	@if ($errors->has('nama_product'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama_product') }}</p></div>
 	@endif
@@ -21,7 +21,7 @@
 
 	<div class="form-group">
 	<label>SKU Induk</label>
-	  <input type="text" class="form-control form-control-user" name ="sku" id="sku">
+	  <input value="{{ $product->sku }}" type="text" class="form-control form-control-user" name ="sku" id="sku">
 	@if ($errors->has('sku'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('sku') }}</p></div>
 	@endif
@@ -29,7 +29,7 @@
 
 	<div class="form-group">
 	<label>Berat</label>
-	  <input type="text" class="form-control form-control-user" name ="berat" id="berat">
+	  <input value="{{ $product->berat }}" type="text" class="form-control form-control-user" name ="berat" id="berat">
 	@if ($errors->has('berat'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('berat') }}</p></div>
 	@endif
@@ -38,22 +38,15 @@
 	
 	<div class="form-group">
 		<label>Satuan</label>
-		<select style="width: 100%" class="form-control form-control-user select2-class" name="satuan_id" id="satuan_id">
-		<option value="AL"> </option>
-		<option value="WY"> </option>
-		</select>
+		<?= $satuan_option ?>
 	@if ($errors->has('satuan_id'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('satuan_id') }}</p></div>
 	@endif
 	</div>
 
-
 	<div class="form-group">
 		<label>Kategori</label>
-		<select style="width: 100%" class="form-control form-control-user select2-class" id="kategori_id" name="kategori_id">
-		<option value="AL"></option>
-		<option value="WY"></option>
-		</select>
+		<?= $kategori_option ?>
 	@if ($errors->has('kategori_id'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('kategori_id') }}</p></div>
 	@endif
@@ -61,32 +54,41 @@
 
 	<div class="form-group">
 	<label>Volume</label>
-	  <input type="text" class="form-control form-control-user" name ="volume" id="volume">
+	  <input value="{{ $product->volume }}" type="text" class="form-control form-control-user" name ="volume" id="volume">
 	@if ($errors->has('volume'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('volume') }}</p></div>
 	@endif
 	</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading"><strong>Foto Produk</strong></div>
-		<br>
-		<div class="container" style="padding-left: 10px">
-			<div class="row">
-				<div class="col-sm-2 imgUp" style="padding-left: 0px">
-					<div class="imagePreview"></div>
-					<label class="btn btn-primary">
-						<i class="fas fa-upload"></i>
-					<input type="file" name="file[]" class="uploadFile img" value="" style="width: 0px;height: 0px;overflow: hidden;">
-					</label>
+	<!-- Harus Diganti Render nya -->
+
+	@if($product->productimage != null)
+
+		<div class="panel panel-default">
+		@foreach($product->productimage as $product_image)
+
+			<div class="panel-heading"><strong>Foto Produk</strong></div>
+			<br>
+			<div class="container" style="padding-left: 10px">
+				<div class="row">
+					<div class="col-sm-2 imgUp" style="padding-left: 0px">
+						<div class="imagePreview"></div>
+						<label class="btn btn-primary">
+							<i class="fas fa-upload"></i>
+						<input type="file" name="file[]" class="uploadFile img" value="" style="width: 0px;height: 0px;overflow: hidden;">
+						</label>
+					</div>
+					<!-- <i class="fa fa-plus imgAdd"></i> -->
 				</div>
-				<i class="fa fa-plus imgAdd"></i>
 			</div>
+			@endforeach
 		</div>
-	</div>
+	
+	@endif
 
 	<div class="form-group">
 	<label>Expired Tanggal</label>
-	  <input type="date" class="form-control form-control-user" name ="exp" id="exp">
+	  <input value="{{ $product->exp }}" type="date" class="form-control form-control-user" name ="exp" id="exp">
 	@if ($errors->has('exp'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('exp') }}</p></div>
 	@endif
@@ -94,7 +96,7 @@
 
 	<div class="form-group">
 	<label>Merek / Brand</label>
-	  <input type="text" class="form-control form-control-user" name ="merek" id="merek">
+	  <input value="{{ $product->merek }}" type="text" class="form-control form-control-user" name ="merek" id="merek">
 	@if ($errors->has('merek'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('merek') }}</p></div>
 	@endif
@@ -105,7 +107,7 @@
 
 		<div class="form-group">
 		<label>Harga Beli</label>
-		<input type="text" class="form-control form-control-user" name ="single_harga_beli" id="single_harga_beli">
+		<input value="{{ $product->single_harga_beli }}" type="text" class="form-control form-control-user" name ="single_harga_beli" id="single_harga_beli">
 		@if ($errors->has('single_harga_beli'))
 			<div><p style="color: red"><span>&#42;</span> {{ $errors->first('single_harga_beli') }}</p></div>
 		@endif
@@ -113,7 +115,7 @@
 
 		<div class="form-group">
 		<label>Harga Jual</label>
-		<input type="text" class="form-control form-control-user" name ="single_harga_jual" id="single_harga_jual">
+		<input value="{{ $product->single_harga_jual }}" type="text" class="form-control form-control-user" name ="single_harga_jual" id="single_harga_jual">
 		@if ($errors->has('single_harga_jual'))
 			<div><p style="color: red"><span>&#42;</span> {{ $errors->first('single_harga_jual') }}</p></div>
 		@endif
@@ -124,72 +126,36 @@
 
 	<div class="form-group">
 	<label>Deskripsi Produk</label>
-	  <textarea type="text" class="form-control form-control-user" name ="deskripsi" id="deskripsi"> </textarea>
+	  <textarea type="text" class="form-control form-control-user" name ="deskripsi" id="deskripsi"> {{ $product->deskripsi }} </textarea>
 	@if ($errors->has('deskripsi'))
 	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('deskripsi') }}</p></div>
 	@endif
 	</div>
-
+	
+	
+	
 	<div class="col-sm-1" style="padding-left: 0px">
+	
 	<label><strong>Variasi</strong></label>
-		<input name="varian_check" id="varian_check" type="checkbox" data-toggle="toggle">
+		<input name="varian_check"; <?= $product->has_varian != Product::PRODUCT_HAS_NOT_VARIANT ? 'checked' : ''; ?> id="varian_check" type="checkbox" data-toggle="toggle">
 	</div>
 
-	<div id="varian_form" style="display: none">
+	<div id="varian_form">
 	
 	<hr>
-	
+
 	<label><strong> VARIAN OPTION </strong></label>
 
 	<div class="form-group">
-	<label>Nama Variasi</label>
-	  <input type="text" class="form-control form-control-user" name ="nama_variant" id="nama_variant">
-	@if ($errors->has('nama_variant'))
-	    <div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama_variant') }}</p></div>
-	@endif
+		<label>Nama Variasi</label>
+		<input type="text" class="form-control form-control-user" value="{{$product->variant->nama_variant}}" name ="nama_variant" id="nama_variant">
+		@if ($errors->has('nama_variant'))
+			<div><p style="color: red"><span>&#42;</span> {{ $errors->first('nama_variant') }}</p></div>
+		@endif
 	</div>
 
-	<div class="container" style="padding-left: 0px">
-		<div class="row">
-		<div class="col-md-12">
-		    <div data-role="dynamic-fields">
-		        <div class="form-inline">
-		            <div class="form-group">
-		                <label class="sr-only" for="field-name">Pilihan</label>
-		                <input type="text" name="variant_detail['option'][]" class="form-control" id="field-option" placeholder="Pilihan">
-		            </div>
-
-		            <span>&nbsp - &nbsp</span>
-		            
-		            <div class="form-group">
-		                <label class="sr-only" for="field-value">Harga Beli</label>
-		                <input type="text" name="variant_detail['harga_beli'][]" class="form-control" id="field-value-beli" placeholder="Harga Beli">
-		            </div>
-					
-					<span>&nbsp - &nbsp</span>
-
-					<div class="form-group">
-		                <label class="sr-only" for="field-value">Harga Jual</label>
-		                <input type="text" name="variant_detail['harga_jual'][]" class="form-control" id="field-value-jual" placeholder="Harga Jual">
-		            </div>
-
-		            <span>&nbsp - &nbsp</span>
-		            
-		            <button class="btn btn-danger" data-role="remove">
-		                <i class="fas fa-eraser"></i>
-		            </button>
-		            
-		            <button class="btn btn-primary" data-role="add">
-		                <i class="fas fa-plus"></i>
-		            </button>
-		        </div>  <!-- /div.form-inline -->
-		    </div>  <!-- /div[data-role="dynamic-fields"] -->
-		</div>  <!-- /div.col-md-12 -->
-		</div>  <!-- /div.row -->
+			
 	</div>
-
-	</div>
-
 	<div class="col-sm-1" style="padding-left: 0px; padding-top: 10px">
 	
 	<label><strong>Grosir</strong></label>
@@ -243,7 +209,7 @@
 	</div>
 
 	<div class="form-group" style="padding-top: 20px">
-		<button type="submit" class="btn btn-info"> TAMBAH </button>
+		<button type="submit" class="btn btn-info"> UPDATE </button>
 	</div>
 
 	</form>
@@ -256,14 +222,31 @@
 @push('scripts')
 
 <script>
+
+	function loadVarian()
+	{
+		var has_variant = "{{ $product->has_varian }}";
+
+		if(has_variant == "{{ Product::PRODUCT_HAS_VARIANT }}")
+		{
+			$('#varian_check').prop("checked", true);
+			$('#varian_form').show();
+			$('#showhide').hide();
+		}
+		else if(has_variant == "{{ Product::PRODUCT_HAS_NOT_VARIANT }}")
+		{
+			$("#varian_check").prop("checked", false);
+			$('#varian_form').hide();
+			$('#showhide').show();
+		}
+		
+	}
+
 	
 	$( document ).ready(function() {
 		
-		$('.select2-class').select2();
-		
-		$('#varian_check').prop('checked', false);
-		$('#grosir_check').prop('checked', false);
-
+		loadVarian();
+				
 		$("#varian_check").change(function() {
 
 			if($('#varian_check').is(":checked"))
@@ -312,7 +295,7 @@
 				  };
 				}
 			}
-		})
+		});
 
 		$('#kategori_id').select2({
 			allowClear: true,
@@ -332,9 +315,10 @@
 				  };
 				}
 			}
-		})
-
+		});
+      
 	});
+
 
 </script>
 

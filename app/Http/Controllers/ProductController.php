@@ -6,7 +6,14 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductImage;
 use App\Model\Variant\Variant;
 use App\Model\Variant\VariantDetail;
+
 use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+
+use App\Model\Kategori\Kategori;
+use App\Http\Resources\Kategori\KategoriResource;
+
+use App\Model\Satuan\Satuan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -16,6 +23,8 @@ use Yajra\Datatables\Datatables;
 
 use DB;
 use Image;
+use URL;
+
 
 class ProductController extends Controller
 {
@@ -41,26 +50,68 @@ class ProductController extends Controller
             $data = Product::all();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('product_image', function($row){
+                        
+                        $first_product_image = ProductImage::where('product_id', $row->id)->first(); 
+                       
+                        if($first_product_image != null)
+                        {
+                            return "<img src= '". URL::to('/'). '/storage/product/'. $first_product_image->image_url . "' width='50' height='50'>"; 
+                        }
+                        else
+                        {
+                            return 'No Image';
+                        }
+
+                    })
+                    ->addColumn('variant', function($row){
+                        
+                        if(Product::findOrFail($row->id)->has_varian == Product::PRODUCT_HAS_VARIANT)
+                        {
+                            $variant = Variant::where('product_id', $row->id)->first();
+
+                            $variant_detail_arr = [];
+
+                            if($variant != null)
+                            {   
+                                foreach ($variant->variantDetail->all() as $key => $detail) {                                   
+                                    array_push($variant_detail_arr, $detail->option);
+                                }
+
+                                return implode ("<br> ", $variant_detail_arr);
+                            }
+                            else
+                            {
+                                return '-';
+                            }   
+                        }
+                        else
+                        {
+                            return '-';
+                        }                        
+                    })
                     ->addColumn('action', function($row){  
                         $btn = '
                         <button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-success btn-circle btn-sm"><i class="far fa-edit"></i></button>';
                         $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></button>';
                         return $btn .'&nbsp'.'&nbsp'. $delete; 
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action','product_image','variant'])
                     ->make(true);
         }
-
-        // if($this->getUserPermission('index product'))
-        // {
-            // $this->systemLog(false,'Mengakses Halaman Master Product');
-            return view('product.index', ['active'=>'product']);   
-        // }
-        // else
-        // {
-            // $this->systemLog(true,'Gagal Mengakses Halaman Master Product');
-            // return view('error.unauthorized', ['active'=>'product']);
-        // }
+        else
+        {
+            // if($this->getUserPermission('index product'))
+            // {
+                // $this->systemLog(false,'Mengakses Halaman Master Product');
+                return view('product.index', ['active'=>'product']);   
+            // }
+            // else
+            // {
+                // $this->systemLog(true,'Gagal Mengakses Halaman Master Product');
+                // return view('error.unauthorized', ['active'=>'product']);
+            // }
+        }
     }
 
     /**
@@ -94,15 +145,14 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         $product            = new Product();
-        $product_image      = new ProductImage();
         $variant            = new Variant();
-        $variant_detail     = new VariantDetail();
 
         $product->nama_product      = $request->get('nama_product');
         $product->sku               = $request->get('sku');
         $product->berat             = $request->get('berat');
         $product->volume            = $request->get('volume');
         $product->has_varian        = $request->get('has_varian');
+        $product->merek             = $request->get('merek');
         $product->has_grosir        = $request->get('has_grosir');
         $product->exp               = $request->get('exp');
         $product->deskripsi         = $request->get('deskripsi');
@@ -121,7 +171,6 @@ class ProductController extends Controller
         }
 
         // Save Image Procuct
-
         if ($request->hasFile('file')) {
 
             foreach ($request->file('file') as $images) {
@@ -135,6 +184,8 @@ class ProductController extends Controller
 
                 $img->stream();
                 Storage::disk('local')->put('public/product/'.$fileName, $img, 'public');
+                
+                $product_image = new ProductImage();
                 $product_image->product_id = $product->id;
                 $product_image->image_url = $fileName;
 
@@ -147,7 +198,6 @@ class ProductController extends Controller
         }
 
         // Save Varian Product
-
         if($request->get('varian_check') === 'on')
         {
             $variant->product_id    = $product->id;
@@ -160,26 +210,43 @@ class ProductController extends Controller
             }
 
             // Save Varian Detail
-
             if(!$request->get('variant_detail'))
             {
                 DB::rollBack();
                 return redirect()->back()->with('alert_error', 'Gagal di simpan');
             }
-
+            
+            $arr_variant_detail = [];
+        
             foreach ($request->get('variant_detail') as $key => $variants) {
-
-                $variant_detail->variant_id     = $variant->id;
-
+                                
                 if($key == "'option'")
                 {
-                    $variant_detail->option         = $variants;
+                    $arr_variant_detail['option'] = $variants;
                 }
-                else if($key == "'harga'")
+                
+                if($key == "'harga_beli'")
                 {
-                    $variant_detail->harga          = $variants;
+                    $arr_variant_detail['harga_beli'] = $variants;
                 }
+                
+                if($key == "'harga_jual'")
+                {
+                    $arr_variant_detail['harga_jual'] = $variants;
+                }
+            }
 
+            $counter = count($arr_variant_detail['option']);
+            
+            for ($num = 0; $num < $counter ; $num++) 
+            {
+                $variant_detail = new VariantDetail();
+                $variant_detail->variant_id     = $variant->id;
+                $variant_detail->variant_code   = $variant_detail->makevariantCode($request->get('nama_product'));
+                $variant_detail->option         = $arr_variant_detail['option'][$num];
+                $variant_detail->harga_jual     = $arr_variant_detail['harga_jual'][$num];
+                $variant_detail->harga_beli     = $arr_variant_detail['harga_beli'][$num];
+                
                 if(!$variant_detail->save())
                 {
                     DB::rollBack();
@@ -187,36 +254,37 @@ class ProductController extends Controller
                 }
             }
         }
+        else // IF NOT HAVE VARIANT
+        {
+            // Save default variant from single product
+            $variant->product_id    = $product->id;
+            $variant->nama_variant  = 'Single Product '. $product->nama_product;
+
+            if(!$variant->save())
+            {
+                DB::rollBack();
+                return redirect()->back()->with('alert_error', 'Gagal di simpan');
+            }
+
+            $variant_detail = new VariantDetail();
+            $variant_detail->variant_id     = $variant->id;
+            $variant_detail->option         = null;
+            $variant_detail->variant_code   = $variant_detail->makevariantCode($request->get('nama_product'));
+            $variant_detail->harga_jual     = $request->get('single_harga_jual');
+            $variant_detail->harga_beli     = $request->get('single_harga_beli');
+
+            if(!$variant_detail->save())
+            {
+                DB::rollBack();
+                return redirect()->back()->with('alert_error', 'Gagal di simpan');
+            }
+        }
 
         DB::commit();
-        return redirect()->back()->with('alert_sucsess', 'Produk Berhasil disimpan');
-
-        // Save Grosir
-
-        // Save History Stock
         
-    }
+        return redirect()->route('product')->with('alert_sucsess', 'Produk Berhasil disimpan');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\Product\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Product\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        
+        // Save Grosir        
     }
 
     /**
@@ -226,9 +294,41 @@ class ProductController extends Controller
      * @param  \App\Model\Product\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function viewupdate(Request $request)
     {
-        
+        // if($this->getUserPermission('update product'))
+        // {       
+            // $this->systemLog(false,'Mengakses Halaman Update customer');
+
+            $product        = Product::findOrFail($request->id);
+            $data_kategori  = Kategori::getKategori();
+            $data_satuan    = Satuan::getSatuan(); 
+
+            $kategori_option = '<select class="js-example-basic-single form-control" name="kategori_id" id="kategori_id" style="width: 100%">';
+            foreach ($data_kategori as $kategori) {
+                $kategori_option .= '<option value="'.$kategori->id.'">'.$kategori->nama_kategori.'</option>';
+            }           
+            $kategori_option .= '</select>';
+
+            $satuan_option = '<select class="js-example-basic-single form-control" name="satuan_id" id="satuan_id" style="width: 100%">';
+            foreach ($data_satuan as $satuan) {
+                $satuan_option .= '<option value="'.$satuan->id.'">'.$satuan->nama_satuan.'</option>';
+            }           
+            $satuan_option .= '</select>';
+
+            return view('product.update', ['active'=>'product','product'=>$product,'kategori_option'=>$kategori_option,'satuan_option'=>$satuan_option]);
+
+        // }
+        // else
+        // {
+        //     $this->systemLog(true,'Gagal Mengakses Halaman Update product');
+        //     return view('error.unauthorized', ['active'=>'product']);
+        // }
+    }
+
+    public function update(UpdateProductRequest $request)
+    {
+
     }
 
     /**
@@ -237,8 +337,19 @@ class ProductController extends Controller
      * @param  \App\Model\Product\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
-        
+        DB::beginTransaction();
+       
+        $product = Product::findOrfail($request->get('idproduct'));
+
+        if(!$product->delete())
+        {
+            DB::rollBack();
+            return $this->getResponse(false,400,'','Produk gagal dihapus');
+        }
+
+        DB::commit();
+        return $this->getResponse(true,200,'','Produk berhasil dihapus');
     }
 }
