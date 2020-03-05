@@ -154,7 +154,47 @@
 		@endif
 	</div>
 
+	<!-- Dynamic Form -->
+
+	<div class="table-responsive">
+			<form method="post" id="dynamic_form">
+				<span id="result"></span>
+				<table class="table table-bordered table-striped" id="user_table">
+			<thead>
+			<tr>
+				<th width="35%">Option</th>
+				<th width="35%">Harga Jual</th>
+				<th width="35%">Harga Beli</th>
+				<th width="30%">Action</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			@foreach ($product->variant->variantDetail as $index => $variant)
 			
+			<tr>
+			<td><input type="text" value="{{ $variant->option}}"  name="option[]" class="form-control" /></td>
+			<td><input type="text" value="{{ $variant->harga_jual }}" name="harga_jual[]" class="form-control" /></td>
+			<td><input type="text" value="{{ $variant->harga_beli }}" name="harga_beli[]" class="form-control" /></td>
+			
+			@if($index == 0)
+			<td><button type="button" name="add" id="add" class="btn btn-success"><i class="fas fa-plus-square"></i></i></button></td></tr>
+			@else
+			<td><button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fas fa-fw fa-trash-alt"></i></button></td></tr>
+			@endif
+
+			</tr>
+
+			@endforeach
+		
+			</tbody>
+		</table>
+			</form>
+	</div>
+
+	<!-- End Dynamic Form -->
+
+
 	</div>
 	<div class="col-sm-1" style="padding-left: 0px; padding-top: 10px">
 	
@@ -316,7 +356,73 @@
 				}
 			}
 		});
-      
+
+		// Dynamic Form Begin
+
+		var index;
+		var count = <?= count($product->variant->variantDetail) ?>;
+			
+		dynamic_field(count);
+
+		function dynamic_field(count)
+		{
+			html = '<tr>';
+			html += '<td><input type="text" name="option[]" class="form-control" /></td>';
+			html += '<td><input type="text" name="harga_jual[]" class="form-control" /></td>';
+			html += '<td><input type="text" name="harga_beli[]" class="form-control" /></td>';
+
+			if(count != 0)
+			{
+				html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fas fa-fw fa-trash-alt"></i></button></td></tr>';
+            	$('tbody').append(html);
+			}
+
+		}
+
+		$(document).on('click', '#add', function(){
+			count++;
+			dynamic_field(count);
+		});
+
+		$(document).on('click', '.remove', function(){
+			count--;
+			$(this).closest("tr").remove();
+			console.log(count);
+		});
+
+		$('#dynamic_form').on('submit', function(event){
+				event.preventDefault();
+				$.ajax({
+					url:'#',
+					method:'post',
+					data:$(this).serialize(),
+					dataType:'json',
+					beforeSend:function(){
+						$('#save').attr('disabled','disabled');
+					},
+					success:function(data)
+					{
+						if(data.error)
+						{
+							var error_html = '';
+							for(var count = 0; count < data.error.length; count++)
+							{
+								error_html += '<p>'+data.error[count]+'</p>';
+							}
+							$('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+						}
+						else
+						{
+							dynamic_field(1);
+							$('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+						}
+						$('#save').attr('disabled', false);
+					}
+				})
+				
+				// End Dynamic Form 
+		});
+     
 	});
 
 
