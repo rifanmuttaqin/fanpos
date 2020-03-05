@@ -65,23 +65,27 @@
 	@if($product->productimage != null)
 
 		<div class="panel panel-default">
-		@foreach($product->productimage as $product_image)
+		
 
 			<div class="panel-heading"><strong>Foto Produk</strong></div>
 			<br>
 			<div class="container" style="padding-left: 10px">
 				<div class="row">
+			
+				@foreach($product->productimage as $product_image)
 					<div class="col-sm-2 imgUp" style="padding-left: 0px">
-						<div class="imagePreview"></div>
+						<div class="imagePreviewUpdate" style="background-image:url({{ URL::to('/').'/storage/product/'.$product_image->image_url }})"></div>
 						<label class="btn btn-primary">
 							<i class="fas fa-upload"></i>
 						<input type="file" name="file[]" class="uploadFile img" value="" style="width: 0px;height: 0px;overflow: hidden;">
 						</label>
 					</div>
-					<!-- <i class="fa fa-plus imgAdd"></i> -->
+				@endforeach
+
+					<i class="fa fa-plus imgAddUpdate"></i>
 				</div>
 			</div>
-			@endforeach
+		
 		</div>
 	
 	@endif
@@ -157,7 +161,7 @@
 	<!-- Dynamic Form -->
 
 	<div class="table-responsive">
-			<form method="post" id="dynamic_form">
+			
 				<span id="result"></span>
 				<table class="table table-bordered table-striped" id="user_table">
 			<thead>
@@ -189,7 +193,7 @@
 		
 			</tbody>
 		</table>
-			</form>
+		
 	</div>
 
 	<!-- End Dynamic Form -->

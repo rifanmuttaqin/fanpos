@@ -56,7 +56,8 @@ class ProductController extends Controller
                        
                         if($first_product_image != null)
                         {
-                            return "<img src= '". URL::to('/'). '/storage/product/'. $first_product_image->image_url . "' width='50' height='50'>"; 
+                            return 
+                            "<img style='margin-left: auto; margin-right: auto; display: block;' src= '". URL::to('/'). '/storage/product/'. $first_product_image->image_url . "' width='50' height='50'>"; 
                         }
                         else
                         {
@@ -328,7 +329,7 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request)
     {
-
+        dd($request->all());
     }
 
     /**
