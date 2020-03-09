@@ -26,6 +26,7 @@ class TblVariantDetail extends Migration
             $table->foreign('variant_id')
                 ->references('id')
                 ->on('tbl_variant')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
     }

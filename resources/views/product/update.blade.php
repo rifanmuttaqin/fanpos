@@ -2,6 +2,36 @@
 
 @section('title', '')
 
+@section('alert')
+
+@if(Session::has('alert_success'))
+  @component('components.alert')
+        @slot('class')
+            success
+        @endslot
+        @slot('title')
+            Terimakasih
+        @endslot
+        @slot('message')
+            {{ session('alert_success') }}
+        @endslot
+  @endcomponent
+@elseif(Session::has('alert_error'))
+  @component('components.alert')
+        @slot('class')
+            error
+        @endslot
+        @slot('title')
+            Cek Kembali
+        @endslot
+        @slot('message')
+            {{ session('alert_error') }}
+        @endslot
+  @endcomponent 
+@endif
+
+@endsection
+
 @section('content')
 
 <div class="card col-sm-12">
@@ -10,6 +40,8 @@
 	<form  method="post" action="{{ route('update-product') }}" enctype="multipart/form-data">
 
 	@csrf
+
+	<input value="{{ $product->id }}" type="hidden" class="form-control form-control-user" name ="id_product" id="id_product">
 
 	<div class="form-group">
 	<label>Nama Produk</label>
@@ -35,7 +67,6 @@
 	@endif
 	</div>
 
-	
 	<div class="form-group">
 		<label>Satuan</label>
 		<?= $satuan_option ?>
@@ -60,37 +91,38 @@
 	@endif
 	</div>
 
-	<!-- Harus Diganti Render nya -->
+	@if(!empty($product->productimage))
 
-	@if($product->productimage != null)
-
-		<div class="panel panel-default">
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong>Foto Produk</strong></div>
+		<br>
+		<div class="container" style="padding-left: 10px">
+			<div class="row">
 		
+			@foreach($product->productimage as $product_image)
 
-			<div class="panel-heading"><strong>Foto Produk</strong></div>
-			<br>
-			<div class="container" style="padding-left: 10px">
-				<div class="row">
-			
-				@foreach($product->productimage as $product_image)
-					<div class="col-sm-2 imgUp" style="padding-left: 0px">
-						<div class="imagePreviewUpdate" style="background-image:url({{ URL::to('/').'/storage/product/'.$product_image->image_url }})"></div>
-						<label class="btn btn-primary">
-							<i class="fas fa-upload"></i>
-						<input type="file" name="file[]" class="uploadFile img" value="" style="width: 0px;height: 0px;overflow: hidden;">
-						</label>
-					</div>
-				@endforeach
+				@if($product_image != null)
 
-					<i class="fa fa-plus imgAddUpdate"></i>
+				<div class="col-sm-2 imgUp" style="padding-left: 0px">
+					<div class="imagePreviewUpdate" style="background-image:url({{ URL::to('/').'/storage/product/'.$product_image->image_url }})"></div>
+					<label class="btn btn-primary">
+						<i class="fas fa-upload"></i>
+					<input type="file" name="file[]" class="uploadFile img" value="" style="width: 0px;height: 0px;overflow: hidden;">
+					</label>
 				</div>
+
+				@endif
+
+			@endforeach
+
+				<i class="fa fa-plus imgAddUpdate"></i>
 			</div>
-		
 		</div>
-	
+	</div>	
+
 	@endif
 
-	<div class="form-group">
+	<div class="form-group" style="padding-top:10px">
 	<label>Expired Tanggal</label>
 	  <input value="{{ $product->exp }}" type="date" class="form-control form-control-user" name ="exp" id="exp">
 	@if ($errors->has('exp'))
@@ -111,15 +143,18 @@
 
 		<div class="form-group">
 		<label>Harga Beli</label>
-		<input value="{{ $product->single_harga_beli }}" type="text" class="form-control form-control-user" name ="single_harga_beli" id="single_harga_beli">
+		<input value="<?= $product->has_varian == Product::PRODUCT_HAS_NOT_VARIANT ? $product->variant->variantDetail[0]->harga_beli : null  ?>" type="text" class="form-control form-control-user" name ="single_harga_beli" id="single_harga_beli">
 		@if ($errors->has('single_harga_beli'))
 			<div><p style="color: red"><span>&#42;</span> {{ $errors->first('single_harga_beli') }}</p></div>
 		@endif
 		</div>
+		
+		<!-- Fill if product single -->
+		<input value="{{ $product->variant->variantDetail[0]->variant_code }}" type="hidden" class="form-control form-control-user" name ="single_variant_code" id="single_variant_code">
 
 		<div class="form-group">
 		<label>Harga Jual</label>
-		<input value="{{ $product->single_harga_jual }}" type="text" class="form-control form-control-user" name ="single_harga_jual" id="single_harga_jual">
+		<input value="<?= $product->has_varian == Product::PRODUCT_HAS_NOT_VARIANT ? $product->variant->variantDetail[0]->harga_jual : null ?>" type="text" class="form-control form-control-user" name ="single_harga_jual" id="single_harga_jual">
 		@if ($errors->has('single_harga_jual'))
 			<div><p style="color: red"><span>&#42;</span> {{ $errors->first('single_harga_jual') }}</p></div>
 		@endif
@@ -169,6 +204,7 @@
 				<th width="35%">Option</th>
 				<th width="35%">Harga Jual</th>
 				<th width="35%">Harga Beli</th>
+				
 				<th width="30%">Action</th>
 			</tr>
 			</thead>
@@ -177,9 +213,10 @@
 			@foreach ($product->variant->variantDetail as $index => $variant)
 			
 			<tr>
-			<td><input type="text" value="{{ $variant->option}}"  name="option[]" class="form-control" /></td>
-			<td><input type="text" value="{{ $variant->harga_jual }}" name="harga_jual[]" class="form-control" /></td>
-			<td><input type="text" value="{{ $variant->harga_beli }}" name="harga_beli[]" class="form-control" /></td>
+			<td><input type="text" value="{{ $variant->option}}"  name="variant_detail['option'][]" class="form-control" /></td>
+			<td><input type="text" value="{{ $variant->harga_jual }}" name="variant_detail['harga_jual'][]" class="form-control" /></td>
+			<td><input type="text" value="{{ $variant->harga_beli }}" name="variant_detail['harga_beli'][]" class="form-control" /></td>
+			<input type="hidden" value="{{ $variant->variant_code }}" name="variant_detail['variant_code'][]" class="form-control" />
 			
 			@if($index == 0)
 			<td><button type="button" name="add" id="add" class="btn btn-success"><i class="fas fa-plus-square"></i></i></button></td></tr>

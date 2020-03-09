@@ -36,8 +36,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
             <a class="collapse-item" href="{{route('product')}}">Daftar Produk</a>
-            <a class="collapse-item" href="">Penyesuaian</a>
-            <a class="collapse-item" href="">Pembelian</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
           </div>
@@ -71,6 +69,7 @@
         <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
+            <a class="collapse-item" href="">Penyesuaian</a>
             <a class="collapse-item" href="">History</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->
@@ -139,6 +138,7 @@
             <h6 class="collapse-header">Data Pendukung</h6>
             <a class="collapse-item" href="{{ route('kategori-url') }}">Kategori</a>
             <a class="collapse-item" href="{{ route('satuan-url') }}">Satuan</a>
+            <a class="collapse-item" href="#">Struk </a>
             <a class="collapse-item" href="">Tax / Pajak</a>
             <h6 class="collapse-header">Data Aplikasi</h6>
             <a class="collapse-item" href="{{ route('toko') }}">Toko</a>

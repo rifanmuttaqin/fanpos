@@ -37,6 +37,14 @@ class Variant extends Model
 
     /**
      *
+     */
+    public static function findByProduct($product_id)
+    {
+        return static::where('product_id',$product_id)->first();
+    }
+
+    /**
+     *
      * @var array
      */
     public function variantDetail()

@@ -28,6 +28,14 @@ class ProductImage extends Model
 
     /**
      *
+     */
+    public static function findByProduct($product_id)
+    {
+        return static::where('product_id',$product_id)->get();
+    }
+
+    /**
+     *
      * @var array
      */
     public function variant()

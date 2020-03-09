@@ -37,6 +37,11 @@ class VariantDetail extends Model
     {
         return $this->hasOne('App\Model\Variant\Variant');
     }
+
+    public static function findByVariantCode($variant_id,$variant_code)
+    {
+        return static::where('variant_id',$variant_id)->where('variant_code',$variant_code)->first();
+    }
     
     /**
      *

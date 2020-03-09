@@ -1,0 +1,12 @@
+MASTER PRODUK
+
+- Update Produk Menambah Varian tidak masuk. Namun Menghapus Varian Bisa
+- Update produk (Bagian Image) Image masih belum bisa dihapus / Image Kosong Preview Null Image tidak keluar BUG
+- Pada Update jika menambah gambar, gambar awal terhapus, ini harus dibenarkan kondisinya
+- Modul Grosir belum ditambahkan
+- FontAwesome masih CDN Belum Lokal Server
+- Jadikan Harga Beli dan Harga Jual baik pada single produk atau varian produk wajib untuk diisi
+
+
+
+Next Update varian harus bisa lebih dari satu

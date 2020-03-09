@@ -15,6 +15,9 @@ use App\Http\Resources\Kategori\KategoriResource;
 
 use App\Model\Satuan\Satuan;
 
+use App\Model\Stock\StockHistory;
+use App\Model\Stock\StockProduct;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +64,7 @@ class ProductController extends Controller
                         }
                         else
                         {
-                            return 'No Image';
+                            "-"; 
                         }
 
                     })
@@ -115,6 +118,40 @@ class ProductController extends Controller
         }
     }
 
+    /*
+     */
+    public function setupInitialStock($product_id=null,$variant_id=null,$variant_detail_id=null)
+    {
+        DB::beginTransaction();
+
+        $stock_product = new StockProduct();
+        $stock_product->product_id = $product_id;
+        $stock_product->variant_id = $variant_id;
+        $stock_product->variant_detail_id = $variant_detail_id;
+        $stock_product->stock = 0;
+        
+        if(!$stock_product->save())
+        {
+            DB::rollBack();
+            return false;
+        }
+
+        $stock_history = new StockHistory();
+        $stock_history->variant_detail_id = $variant_detail_id;
+        $stock_history->stock_in = 0;
+        $stock_history->stock_out = 0;
+        $stock_history->current_stock = 0;
+
+        if(!$stock_history->save())
+        {
+            DB::rollBack();
+            return false;
+        }
+
+        DB::commit();
+        return true;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -152,17 +189,14 @@ class ProductController extends Controller
         $product->sku               = $request->get('sku');
         $product->berat             = $request->get('berat');
         $product->volume            = $request->get('volume');
-        $product->has_varian        = $request->get('has_varian');
         $product->merek             = $request->get('merek');
-        $product->has_grosir        = $request->get('has_grosir');
         $product->exp               = $request->get('exp');
         $product->deskripsi         = $request->get('deskripsi');
         $product->kategori_id       = $request->get('kategori_id');
         $product->satuan_id         = $request->get('satuan_id');
-
         // Option Product
         $product->has_grosir        = Product::PRODUCT_HAS_NOT_GROSIR;
-
+        // Option Varian
         $request->get('varian_check') === 'on' ? $product->has_varian = Product::PRODUCT_HAS_VARIANT : $product->has_varian = Product::PRODUCT_HAS_NOT_VARIANT;
 
         if(!$product->save())
@@ -253,6 +287,8 @@ class ProductController extends Controller
                     DB::rollBack();
                     return redirect()->back()->with('alert_error', 'Gagal di simpan');
                 }
+
+                $this->setupInitialStock($product->id,$variant->id,$variant_detail->id);
             }
         }
         else // IF NOT HAVE VARIANT
@@ -279,6 +315,8 @@ class ProductController extends Controller
                 DB::rollBack();
                 return redirect()->back()->with('alert_error', 'Gagal di simpan');
             }
+
+            $this->setupInitialStock($product->id,$variant->id,$variant_detail->id);
         }
 
         DB::commit();
@@ -329,7 +367,174 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request)
     {
-        dd($request->all());
+        DB::beginTransaction();
+
+        $product = Product::findOrFail($request->get('id_product'));
+        
+        $product->nama_product      = $request->get('nama_product');
+        $product->sku               = $request->get('sku');
+        $product->berat             = $request->get('berat');
+        $product->volume            = $request->get('volume');
+        $product->merek             = $request->get('merek');
+        $product->has_grosir        = $request->get('has_grosir');
+        $product->exp               = $request->get('exp');
+        $product->deskripsi         = $request->get('deskripsi');
+        $product->kategori_id       = $request->get('kategori_id');
+        $product->satuan_id         = $request->get('satuan_id');
+        $product->has_grosir        = Product::PRODUCT_HAS_NOT_GROSIR;
+
+        $request->get('varian_check') === 'on' ? $product->has_varian = Product::PRODUCT_HAS_VARIANT : $product->has_varian = Product::PRODUCT_HAS_NOT_VARIANT;
+
+        if(!$product->save())
+        {
+            DB::rollBack();
+            return redirect()->back()->with('alert_error', 'Gagal di simpan (Produk)');
+        }
+
+        // Save Image Procuct
+        if ($request->hasFile('file')) {
+
+            $this->deleteImage($request->get('id_product'));
+            
+            foreach ($request->file('file') as $images) {
+                
+                $fileName   = time() . '.' . $images->getClientOriginalExtension();
+
+                $img = Image::make($images->getRealPath());
+                $img->resize(300, 300, function ($constraint) {
+                    $constraint->aspectRatio();                 
+                });
+
+                $img->stream();
+                Storage::disk('local')->put('public/product/'.$fileName, $img, 'public');
+                
+                $product_image = new ProductImage();
+                $product_image->product_id = $request->get('id_product');
+                $product_image->image_url = $fileName;
+
+                if(!$product_image->save())
+                {
+                    DB::rollBack();
+                    return redirect()->back()->with('alert_error', 'Gagal di simpan');
+                }
+            }
+        }
+
+         // Save Varian Product
+         if($request->get('varian_check') === 'on')
+         {
+            // Updating Old File
+            $variant = $this->updateVariant($request->get('id_product'),$request->get('nama_variant'));            
+             
+            // Update Varian Detail
+             if(!$request->get('variant_detail'))
+             {
+                DB::rollBack();
+                return redirect()->back()->with('alert_error', 'Gagal di simpan (Detail)');
+             }
+             
+             $arr_variant_detail = [];
+         
+             foreach ($request->get('variant_detail') as $key => $variants) {
+                
+                if($key == "'variant_code'")
+                {
+                    $arr_variant_detail['variant_code'] = $variants;
+                }
+
+                 if($key == "'option'")
+                 {
+                     $arr_variant_detail['option'] = $variants;
+                 }
+                 
+                 if($key == "'harga_beli'")
+                 {
+                     $arr_variant_detail['harga_beli'] = $variants;
+                 }
+                 
+                 if($key == "'harga_jual'")
+                 {
+                     $arr_variant_detail['harga_jual'] = $variants;
+                 }
+             }
+ 
+             $counter = count($arr_variant_detail['option']);
+             
+             for ($num = 0; $num < $counter ; $num++) 
+             {
+                 $variant_detail = VariantDetail::findByVariantCode($variant->id, $arr_variant_detail['variant_code'][$num]);
+
+                 $variant_detail->variant_id     = $variant->id;
+                 $variant_detail->variant_code   = $arr_variant_detail['variant_code'][$num];
+                 $variant_detail->option         = $arr_variant_detail['option'][$num];
+                 $variant_detail->harga_jual     = $arr_variant_detail['harga_jual'][$num];
+                 $variant_detail->harga_beli     = $arr_variant_detail['harga_beli'][$num];
+                 
+                 if(!$variant_detail->save())
+                 {
+                     DB::rollBack();
+                     return redirect()->back()->with('alert_error', 'Gagal di simpan');
+                 }
+             }
+         }
+         else // IF NOT HAVE VARIANT
+         {
+            // Updating Old File
+            $variant = $this->updateVariant($request->get('id_product'), null);
+            
+            $variant_detail = VariantDetail::findByVariantCode($variant->id, $request->get('single_variant_code'));
+
+            $variant_detail->variant_id     = $variant->id;
+            $variant_detail->option         = null;
+            $variant_detail->harga_jual     = $request->get('single_harga_jual');
+            $variant_detail->harga_beli     = $request->get('single_harga_beli');
+
+            if(!$variant_detail->save())
+            {
+                DB::rollBack();
+                return redirect()->back()->with('alert_error', 'Gagal di simpan');
+            }
+         }
+ 
+         DB::commit();
+         return redirect()->route('product')->with('alert_sucsess', 'Produk Berhasil diupdate');
+    }
+
+    /**
+     * 
+     */
+    protected function deleteImage($id_product)
+    {
+        // Deleting old File
+        $products_image = ProductImage::findByProduct($id_product);
+
+        if($products_image != null)
+        {
+            foreach ($products_image as $image) {
+                Storage::disk('local')->delete('public/product/'.$image->image_url);
+                $image->delete();
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    protected function updateVariant($id_product,$variant_name=null)
+    {
+        DB::beginTransaction();
+       
+        $variant                = Variant::findByProduct($id_product);
+        $variant->nama_variant  = $variant_name;
+
+         if(!$variant->save())
+         {
+            DB::rollBack();
+            return redirect()->back()->with('alert_error', 'Gagal di simpan (Varian)');
+         }
+
+        DB::commit();
+        return $variant;
     }
 
     /**

@@ -23,6 +23,7 @@ class TblVariant extends Migration
             $table->foreign('product_id')
                 ->references('id')
                 ->on('tbl_product')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
     }
