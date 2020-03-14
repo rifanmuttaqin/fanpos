@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TblStockHistory extends Migration
+class TblTransaksi extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,24 @@ class TblStockHistory extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_stock_history', function (Blueprint $table) {
+        Schema::create('tbl_transaksi', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('variant_detail_id');
-            $table->integer('stock_in');
-            $table->integer('stock_out');
-            $table->integer('current_stock');
+            $table->unsignedBigInteger('diskon_id');
+            $table->string('customer_name');
+            $table->string('total_price');
+            $table->date('date');
+
+            $table->integer('status'); // Status Pending / Paid
+
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
-            $table->foreign('variant_detail_id')
+            $table->foreign('diskon_id')
             ->references('id')
-            ->on('tbl_variant_detail')
+            ->on('tbl_diskon')
             ->onUpdate('cascade')
-            ->onDelete('cascade');
-
+            ->onDelete('set null');
         });
     }
 
@@ -39,6 +41,6 @@ class TblStockHistory extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_stock_history');
+
     }
 }

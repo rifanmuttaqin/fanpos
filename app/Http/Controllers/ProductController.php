@@ -54,22 +54,22 @@ class ProductController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('product_image', function($row){
-                        
-                        $first_product_image = ProductImage::where('product_id', $row->id)->first(); 
-                       
+
+                        $first_product_image = ProductImage::where('product_id', $row->id)->first();
+
                         if($first_product_image != null)
                         {
-                            return 
-                            "<img style='margin-left: auto; margin-right: auto; display: block;' src= '". URL::to('/'). '/storage/product/'. $first_product_image->image_url . "' width='50' height='50'>"; 
+                            return
+                            "<img style='margin-left: auto; margin-right: auto; display: block;' src= '". URL::to('/'). '/storage/product/'. $first_product_image->image_url . "' width='50' height='50'>";
                         }
                         else
                         {
-                            "-"; 
+                            "-";
                         }
 
                     })
                     ->addColumn('variant', function($row){
-                        
+
                         if(Product::findOrFail($row->id)->has_varian == Product::PRODUCT_HAS_VARIANT)
                         {
                             $variant = Variant::where('product_id', $row->id)->first();
@@ -77,8 +77,9 @@ class ProductController extends Controller
                             $variant_detail_arr = [];
 
                             if($variant != null)
-                            {   
-                                foreach ($variant->variantDetail->all() as $key => $detail) {                                   
+                            {
+                                foreach ($variant->variantDetail->all() as $key => $detail)
+                                {
                                     array_push($variant_detail_arr, $detail->option);
                                 }
 
@@ -87,18 +88,18 @@ class ProductController extends Controller
                             else
                             {
                                 return '-';
-                            }   
+                            }
                         }
                         else
                         {
                             return '-';
-                        }                        
+                        }
                     })
-                    ->addColumn('action', function($row){  
+                    ->addColumn('action', function($row){
                         $btn = '
                         <button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-success btn-circle btn-sm"><i class="far fa-edit"></i></button>';
                         $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></button>';
-                        return $btn .'&nbsp'.'&nbsp'. $delete; 
+                        return $btn .'&nbsp'.'&nbsp'. $delete;
                     })
                     ->rawColumns(['action','product_image','variant'])
                     ->make(true);
@@ -108,7 +109,7 @@ class ProductController extends Controller
             // if($this->getUserPermission('index product'))
             // {
                 // $this->systemLog(false,'Mengakses Halaman Master Product');
-                return view('product.index', ['active'=>'product']);   
+                return view('product.index', ['active'=>'product']);
             // }
             // else
             // {
@@ -129,7 +130,7 @@ class ProductController extends Controller
         $stock_product->variant_id = $variant_id;
         $stock_product->variant_detail_id = $variant_detail_id;
         $stock_product->stock = 0;
-        
+
         if(!$stock_product->save())
         {
             DB::rollBack();
@@ -150,6 +151,73 @@ class ProductController extends Controller
 
         DB::commit();
         return true;
+    }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $data_product = null;
+
+            if($request->has('search'))
+            {
+                $data_product = Product::getProduct($request->get('search'));
+            }
+            else
+            {
+                $data_product = Product::getProduct();
+            }
+
+            $arr_data  = array();
+
+            if($data_product != null)
+            {
+                $key = 0;
+
+                foreach ($data_product as $data) {
+                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['text'] = $data->nama_product;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
+    }
+
+    public function listVariant(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $data = null;
+            $product_id = null;
+
+            if($request->has('search'))
+            {
+                $product_id = $request->get('product_id');
+                $data = Product::getVariantByProduct($request->get('search'), $product_id);
+            }
+            else
+            {
+                $product_id = $request->get('product_id');
+                $data = Product::getVariantByProduct(null, $product_id);
+            }
+
+            $arr_data  = array();
+
+            if($data != null)
+            {
+                $key = 0;
+
+                foreach ($data as $datas) {
+                    $arr_data[$key]['id'] = $datas->id;
+                    $arr_data[$key]['text'] = $datas->nama_variant;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
     }
 
     /**
@@ -209,17 +277,17 @@ class ProductController extends Controller
         if ($request->hasFile('file')) {
 
             foreach ($request->file('file') as $images) {
-                
+
                 $fileName   = time() . '.' . $images->getClientOriginalExtension();
 
                 $img = Image::make($images->getRealPath());
                 $img->resize(300, 300, function ($constraint) {
-                    $constraint->aspectRatio();                 
+                    $constraint->aspectRatio();
                 });
 
                 $img->stream();
                 Storage::disk('local')->put('public/product/'.$fileName, $img, 'public');
-                
+
                 $product_image = new ProductImage();
                 $product_image->product_id = $product->id;
                 $product_image->image_url = $fileName;
@@ -250,21 +318,21 @@ class ProductController extends Controller
                 DB::rollBack();
                 return redirect()->back()->with('alert_error', 'Gagal di simpan');
             }
-            
+
             $arr_variant_detail = [];
-        
+
             foreach ($request->get('variant_detail') as $key => $variants) {
-                                
+
                 if($key == "'option'")
                 {
                     $arr_variant_detail['option'] = $variants;
                 }
-                
+
                 if($key == "'harga_beli'")
                 {
                     $arr_variant_detail['harga_beli'] = $variants;
                 }
-                
+
                 if($key == "'harga_jual'")
                 {
                     $arr_variant_detail['harga_jual'] = $variants;
@@ -272,8 +340,8 @@ class ProductController extends Controller
             }
 
             $counter = count($arr_variant_detail['option']);
-            
-            for ($num = 0; $num < $counter ; $num++) 
+
+            for ($num = 0; $num < $counter ; $num++)
             {
                 $variant_detail = new VariantDetail();
                 $variant_detail->variant_id     = $variant->id;
@@ -281,7 +349,7 @@ class ProductController extends Controller
                 $variant_detail->option         = $arr_variant_detail['option'][$num];
                 $variant_detail->harga_jual     = $arr_variant_detail['harga_jual'][$num];
                 $variant_detail->harga_beli     = $arr_variant_detail['harga_beli'][$num];
-                
+
                 if(!$variant_detail->save())
                 {
                     DB::rollBack();
@@ -295,7 +363,7 @@ class ProductController extends Controller
         {
             // Save default variant from single product
             $variant->product_id    = $product->id;
-            $variant->nama_variant  = 'Single Product '. $product->nama_product;
+            $variant->nama_variant  = $product->nama_product;
 
             if(!$variant->save())
             {
@@ -320,10 +388,10 @@ class ProductController extends Controller
         }
 
         DB::commit();
-        
+
         return redirect()->route('product')->with('alert_sucsess', 'Produk Berhasil disimpan');
 
-        // Save Grosir        
+        // Save Grosir
     }
 
     /**
@@ -336,23 +404,23 @@ class ProductController extends Controller
     public function viewupdate(Request $request)
     {
         // if($this->getUserPermission('update product'))
-        // {       
+        // {
             // $this->systemLog(false,'Mengakses Halaman Update customer');
 
             $product        = Product::findOrFail($request->id);
             $data_kategori  = Kategori::getKategori();
-            $data_satuan    = Satuan::getSatuan(); 
+            $data_satuan    = Satuan::getSatuan();
 
             $kategori_option = '<select class="js-example-basic-single form-control" name="kategori_id" id="kategori_id" style="width: 100%">';
             foreach ($data_kategori as $kategori) {
                 $kategori_option .= '<option value="'.$kategori->id.'">'.$kategori->nama_kategori.'</option>';
-            }           
+            }
             $kategori_option .= '</select>';
 
             $satuan_option = '<select class="js-example-basic-single form-control" name="satuan_id" id="satuan_id" style="width: 100%">';
             foreach ($data_satuan as $satuan) {
                 $satuan_option .= '<option value="'.$satuan->id.'">'.$satuan->nama_satuan.'</option>';
-            }           
+            }
             $satuan_option .= '</select>';
 
             return view('product.update', ['active'=>'product','product'=>$product,'kategori_option'=>$kategori_option,'satuan_option'=>$satuan_option]);
@@ -370,7 +438,7 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         $product = Product::findOrFail($request->get('id_product'));
-        
+
         $product->nama_product      = $request->get('nama_product');
         $product->sku               = $request->get('sku');
         $product->berat             = $request->get('berat');
@@ -395,19 +463,19 @@ class ProductController extends Controller
         if ($request->hasFile('file')) {
 
             $this->deleteImage($request->get('id_product'));
-            
+
             foreach ($request->file('file') as $images) {
-                
+
                 $fileName   = time() . '.' . $images->getClientOriginalExtension();
 
                 $img = Image::make($images->getRealPath());
                 $img->resize(300, 300, function ($constraint) {
-                    $constraint->aspectRatio();                 
+                    $constraint->aspectRatio();
                 });
 
                 $img->stream();
                 Storage::disk('local')->put('public/product/'.$fileName, $img, 'public');
-                
+
                 $product_image = new ProductImage();
                 $product_image->product_id = $request->get('id_product');
                 $product_image->image_url = $fileName;
@@ -424,19 +492,19 @@ class ProductController extends Controller
          if($request->get('varian_check') === 'on')
          {
             // Updating Old File
-            $variant = $this->updateVariant($request->get('id_product'),$request->get('nama_variant'));            
-             
+            $variant = $this->updateVariant($request->get('id_product'),$request->get('nama_variant'));
+
             // Update Varian Detail
              if(!$request->get('variant_detail'))
              {
                 DB::rollBack();
                 return redirect()->back()->with('alert_error', 'Gagal di simpan (Detail)');
              }
-             
+
              $arr_variant_detail = [];
-         
+
              foreach ($request->get('variant_detail') as $key => $variants) {
-                
+
                 if($key == "'variant_code'")
                 {
                     $arr_variant_detail['variant_code'] = $variants;
@@ -446,21 +514,21 @@ class ProductController extends Controller
                  {
                      $arr_variant_detail['option'] = $variants;
                  }
-                 
+
                  if($key == "'harga_beli'")
                  {
                      $arr_variant_detail['harga_beli'] = $variants;
                  }
-                 
+
                  if($key == "'harga_jual'")
                  {
                      $arr_variant_detail['harga_jual'] = $variants;
                  }
              }
- 
+
              $counter = count($arr_variant_detail['option']);
-             
-             for ($num = 0; $num < $counter ; $num++) 
+
+             for ($num = 0; $num < $counter ; $num++)
              {
                  $variant_detail = VariantDetail::findByVariantCode($variant->id, $arr_variant_detail['variant_code'][$num]);
 
@@ -469,7 +537,7 @@ class ProductController extends Controller
                  $variant_detail->option         = $arr_variant_detail['option'][$num];
                  $variant_detail->harga_jual     = $arr_variant_detail['harga_jual'][$num];
                  $variant_detail->harga_beli     = $arr_variant_detail['harga_beli'][$num];
-                 
+
                  if(!$variant_detail->save())
                  {
                      DB::rollBack();
@@ -481,7 +549,7 @@ class ProductController extends Controller
          {
             // Updating Old File
             $variant = $this->updateVariant($request->get('id_product'), null);
-            
+
             $variant_detail = VariantDetail::findByVariantCode($variant->id, $request->get('single_variant_code'));
 
             $variant_detail->variant_id     = $variant->id;
@@ -495,13 +563,13 @@ class ProductController extends Controller
                 return redirect()->back()->with('alert_error', 'Gagal di simpan');
             }
          }
- 
+
          DB::commit();
          return redirect()->route('product')->with('alert_sucsess', 'Produk Berhasil diupdate');
     }
 
     /**
-     * 
+     *
      */
     protected function deleteImage($id_product)
     {
@@ -518,12 +586,12 @@ class ProductController extends Controller
     }
 
     /**
-     * 
+     *
      */
     protected function updateVariant($id_product,$variant_name=null)
     {
         DB::beginTransaction();
-       
+
         $variant                = Variant::findByProduct($id_product);
         $variant->nama_variant  = $variant_name;
 
@@ -546,7 +614,7 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         DB::beginTransaction();
-       
+
         $product = Product::findOrfail($request->get('idproduct'));
 
         if(!$product->delete())

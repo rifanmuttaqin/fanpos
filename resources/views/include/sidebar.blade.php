@@ -69,7 +69,7 @@
         <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="">Penyesuaian</a>
+            <a class="collapse-item" href="{{route('adjustment')}}">Penyesuaian</a>
             <a class="collapse-item" href="">History</a>
             <!-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6> -->

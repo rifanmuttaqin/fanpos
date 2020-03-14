@@ -29,4 +29,15 @@ class StockProduct extends Model
      */
     protected $hidden = [];
 
+
+    /**
+     * Select stock by variant and variant detail
+     *
+     * @var array
+     */
+    public static function getByVariantVariantDetail($variant_id,$variant_detail_id)
+    {
+        return static::where('variant_id',$variant_id)->where('variant_detail_id',$variant_detail_id)->first();
+    }
+
 }

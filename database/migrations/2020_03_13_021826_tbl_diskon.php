@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TblStockHistory extends Migration
+class TblDiskon extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,16 @@ class TblStockHistory extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_stock_history', function (Blueprint $table) {
+        Schema::create('tbl_diskon', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('variant_detail_id');
-            $table->integer('stock_in');
-            $table->integer('stock_out');
-            $table->integer('current_stock');
+            $table->string('diskon_name');
+            $table->integer('diskon_type');
+            $table->double('diskon_value');
+            $table->date('date_priode');
+            // Date Priode dicari tipe date range dalam laravel apa
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-
-            $table->foreign('variant_detail_id')
-            ->references('id')
-            ->on('tbl_variant_detail')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
         });
     }
 

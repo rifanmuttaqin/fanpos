@@ -66,4 +66,13 @@ class Product extends Model
     {
         return $this->hasMany('App\Model\Product\ProductImage');
     }
+
+    /**
+     *
+     * @var array
+     */
+    public static function getProduct($search = null)
+    {
+        return self::where('nama_product', 'like', '%'.$search.'%')->get();
+    }
 }

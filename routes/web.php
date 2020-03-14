@@ -104,4 +104,13 @@ $router->group(['prefix' => 'product'], function () use ($router) {
     $router->post('/store',  ['as'=>'store-product','uses' => 'ProductController@store']);
     $router->post('/update',  ['as'=>'update-product','uses' => 'ProductController@update']);
     $router->post('/delete',  ['as'=>'delete-product','uses' => 'ProductController@destroy']);
+    $router->post('/list',  ['as'=>'list-product','uses' => 'ProductController@list']);
+    $router->post('/list-variant',  ['as'=>'list-variant','uses' => 'ProductController@listVariant']);
+});
+
+// Untuk Adjustment
+$router->group(['prefix' => 'adjustment'], function () use ($router) {
+    $router->get('/',  ['as'=>'adjustment','uses' => 'AdjustmentController@index']);
+    $router->get('/create',  ['as'=>'create-adjustment','uses' => 'AdjustmentController@create']);
+    $router->post('/update-stock',  ['as'=>'update-stock','uses' => 'AdjustmentController@update']);
 });
