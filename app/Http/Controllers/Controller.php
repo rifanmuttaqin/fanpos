@@ -30,16 +30,16 @@ class Controller extends BaseController
     {
         if($status != false)
         {
-            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]); 
+            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]);
         }
         else
         {
-            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]);  
+            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]);
         }
     }
 
     /**
-     * Untuk mengontrol permission 
+     * Untuk mengontrol permission
      */
     public function getUserPermission($permission_name)
     {
