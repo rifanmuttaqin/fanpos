@@ -66,13 +66,23 @@
 
 function btnProsess() {
 
+    // Menggabungkan nilai
     var stock = $('.stock').map(function(){
         return $(this).val()
     }).get();
 
-    console.log(stock);
+    var variant_detail = $('.variant').map(function(){
+        return $(this).val()
+    }).get();
 
-    return false;
+    var array_result = 
+    {
+        prduct_id           : $('#product_id').val(),
+        variant_detail_id   : variant_detail,
+        stock               : stock,
+        variant_id          : $('#variant_id').val(),
+    };
+    
 
     $.ajax({
         url: "{{route("update-stock")}}",
@@ -80,11 +90,21 @@ function btnProsess() {
         data:
             {
                 "_token": "{{ csrf_token() }}",
-                stock: stock
+                array_result: array_result
             },
         success: function (data) {
-
+            if(data.status != false)
+            {
+                swal(data.message, { button:false, icon: "success", timer: 1000});
+            }
+            else
+            {
+                swal(data.message, { button:false, icon: "error", timer: 1000});
+            }
         },
+        error: function(error) {
+          swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+        }
     })
 
 }

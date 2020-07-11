@@ -61,4 +61,13 @@ class VariantDetail extends Model
         
         return $randomString;
     }
+
+    /**
+     *
+     * @var array
+     */
+    public static function getDetailSingleProduct($variant_id)
+    {
+        return self::where('variant_id', $variant_id)->first();
+    }
 }

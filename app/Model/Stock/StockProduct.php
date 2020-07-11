@@ -40,4 +40,9 @@ class StockProduct extends Model
         return static::where('variant_id',$variant_id)->where('variant_detail_id',$variant_detail_id)->first();
     }
 
+    public static function findByVariant($product_id,$variant_id,$variant_detail_id)
+    {
+        return static::where('variant_id',$variant_id)->where('variant_detail_id',$variant_detail_id)->where('product_id',$product_id)->first();
+    }
+
 }
